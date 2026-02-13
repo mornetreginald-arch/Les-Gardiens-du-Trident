@@ -37,9 +37,16 @@ class Articles
     #[ORM\ManyToMany(targetEntity: Commande::class, inversedBy: 'articles')]
     private Collection $commande;
 
+    /**
+     * @var Collection<int, Categorie>
+     */
+    #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'articles')]
+    private Collection $categories;
+
     public function __construct()
     {
         $this->commande = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,6 +134,33 @@ class Articles
     public function removeCommande(Commande $commande): static
     {
         $this->commande->removeElement($commande);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Categorie>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Categorie $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+            $category->addArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Categorie $category): static
+    {
+        if ($this->categories->removeElement($category)) {
+            $category->removeArticle($this);
+        }
 
         return $this;
     }
