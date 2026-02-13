@@ -41,9 +41,16 @@ class Commande
     #[ORM\OneToMany(targetEntity: Chiots::class, mappedBy: 'commande')]
     private Collection $chiots;
 
+    /**
+     * @var Collection<int, Articles>
+     */
+    #[ORM\ManyToMany(targetEntity: Articles::class, mappedBy: 'commande')]
+    private Collection $articles;
+
     public function __construct()
     {
         $this->chiots = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -148,6 +155,33 @@ class Commande
             if ($chiot->getCommande() === $this) {
                 $chiot->setCommande(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Articles>
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Articles $article): static
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
+            $article->addCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Articles $article): static
+    {
+        if ($this->articles->removeElement($article)) {
+            $article->removeCommande($this);
         }
 
         return $this;
