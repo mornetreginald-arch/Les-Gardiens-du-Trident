@@ -16,7 +16,8 @@ class ChiotsType extends AbstractType
         $builder
             // ->add('id_chiot')
             ->add('sexe')
-            ->add('couleur_collier');
+            ->add('couleur_collier')
+            ->add('prix');
         //     ->add('commande', EntityType::class, [
         //         'class' => Commande::class,
         //         'choice_label' => 'id',

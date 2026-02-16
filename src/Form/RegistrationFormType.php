@@ -41,13 +41,11 @@ class RegistrationFormType extends AbstractType
                         message: 'Entrez votre prénom',
                     )],
             ])
-            ->add('adresse', TextType::class, [
-                'label' => 'Adresse',
-                'constraints' => [
-                    new NotBlank(
-                        message: 'Entrez votre adresse',
-                    )],
-            ])
+            ->add('telephone')
+            ->add('rue')
+            ->add('code_postal')
+            ->add('ville')
+            ->add('pays')
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller

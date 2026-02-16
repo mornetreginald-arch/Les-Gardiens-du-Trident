@@ -12,6 +12,8 @@
                 <th>Id_chiot</th> #}
                 <th>Sexe</th>
                 <th>Couleur_collier</th>
+                <th>Prix</th>
+
                 {# <th>actions</th> #}
             </tr>
         </thead>
@@ -22,6 +24,7 @@
                 <td>{{ chiot.idChiot }}</td> #}
                 <td>{{ chiot.sexe }}</td>
                 <td>{{ chiot.couleurCollier }}</td>
+                <td>{{ chiot.prix }}</td>
                 <td>
                     {# <a href="{{ path('app_chiots_show', {'id': chiot.id}) }}">Modifier</a> #}
                     <a href="{{ path('app_chiots_edit', {'id': chiot.id}) }}">Modifier</a>

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ChiotsRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ChiotsRepository::class)]
@@ -24,6 +25,9 @@ class Chiots
 
     #[ORM\ManyToOne(inversedBy: 'chiots')]
     private ?Commande $commande = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    private ?string $prix = null;
 
     public function getId(): ?int
     {
@@ -74,6 +78,18 @@ class Chiots
     public function setCommande(?Commande $commande): static
     {
         $this->commande = $commande;
+
+        return $this;
+    }
+
+    public function getPrix(): ?string
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(string $prix): static
+    {
+        $this->prix = $prix;
 
         return $this;
     }
