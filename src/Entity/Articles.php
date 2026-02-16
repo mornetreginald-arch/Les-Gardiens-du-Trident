@@ -43,10 +43,17 @@ class Articles
     #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'articles')]
     private Collection $categories;
 
+    /**
+     * @var Collection<int, LignePanier>
+     */
+    #[ORM\OneToMany(targetEntity: LignePanier::class, mappedBy: 'articles')]
+    private Collection $lignePaniers;
+
     public function __construct()
     {
         $this->commande = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->lignePaniers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,6 +167,36 @@ class Articles
     {
         if ($this->categories->removeElement($category)) {
             $category->removeArticle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LignePanier>
+     */
+    public function getLignePaniers(): Collection
+    {
+        return $this->lignePaniers;
+    }
+
+    public function addLignePanier(LignePanier $lignePanier): static
+    {
+        if (!$this->lignePaniers->contains($lignePanier)) {
+            $this->lignePaniers->add($lignePanier);
+            $lignePanier->setArticles($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLignePanier(LignePanier $lignePanier): static
+    {
+        if ($this->lignePaniers->removeElement($lignePanier)) {
+            // set the owning side to null (unless already changed)
+            if ($lignePanier->getArticles() === $this) {
+                $lignePanier->setArticles(null);
+            }
         }
 
         return $this;
