@@ -6,6 +6,8 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,51 +20,94 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
-            // ->add('agreeTerms', CheckboxType::class, [
-            //     'mapped' => false,
-            //     'constraints' => [
-            //         new IsTrue(
-            //             message: 'You should agree to our terms.',
-            //         ),
-            //     ],
-            // ])
+            ->add('email', null, [
+                'attr' => [
+                'placeholder' => 'exemple@email.com'
+                ]
+            ])
+            
             ->add('nom', TextType::class, [
                 'label' => 'Nom',
-                'constraints' => [
-                    new NotBlank(
-                        message: 'Entrez votre nom',
-                    )],
+                'attr' => [
+                'placeholder' => 'Votre nom'
+                ],
+            //     'constraints' => [
+            //     new NotBlank([
+            //     'message' => 'Entrez votre nom',
+            // ])
+            //     ],
             ])
             ->add('prenom', TextType::class, [
-                'label' => 'Prénom',
-                'constraints' => [
-                    new NotBlank(
-                        message: 'Entrez votre prénom',
-                    )],
-            ])
-            ->add('telephone')
-            ->add('rue')
-            ->add('code_postal')
-            ->add('ville')
-            ->add('pays')
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
-                'constraints' => [
-                    new NotBlank(
-                        message: 'Entrez votre mot de passe',
-                    ),
-                    new Length(
-                        min: 6,
-                        minMessage: 'Votre mot de passe doit avoir au moins 6 caractères',
-                        // max length allowed by Symfony for security reasons
-                        max: 4096,
-                    ),
+                'label' => 'Prenom',
+                'attr' => [
+                'placeholder' => 'Votre Prenom'
                 ],
+            //     'constraints' => [
+            //     new NotBlank([
+            //     'message' => 'Entrez votre Prenom',
+            // ])
+            //     ],
             ])
+            ->add('telephone', TelType::class, [
+                'attr' => [
+                    'placeholder' => '+33 6 12 34 56 78'
+                ]
+            ])
+
+            ->add('rue', null, [
+                'attr' => [
+                'placeholder' => '123 Rue de le République'
+                ]
+            ])
+            ->add('code_postal', null, [
+                'attr' => [
+                'placeholder' => '75001'
+                ]
+            ])
+            ->add('ville', null, [
+                'attr' => [
+                'placeholder' => 'Paris'
+                ]
+            ])
+            ->add('pays', null, [
+                'attr' => [
+                'placeholder' => 'France'
+                ]
+            ])
+    ->add('plainPassword', RepeatedType::class, [
+    'type' => PasswordType::class,
+    'mapped' => false,
+    'invalid_message' => 'Les mots de passe ne correspondent pas.',
+    'required' => true,
+
+    'first_options'  => [
+        'label' => 'Mot de passe',
+        'attr' => [
+            'placeholder' => 'Entrez votre mot de passe',
+            'autocomplete' => 'new-password',
+        ],
+        'constraints' => [
+            // new NotBlank([
+            //     'message' => 'Entrez un mot de passe',
+            // ]),
+            // new Length([
+            //     'min' => 6,
+            //     'minMessage' => 'Votre mot de passe doit avoir au moins 6 caractères',
+            //     'max' => 4096,
+            // ]),
+        ],
+    ],
+
+    'second_options' => [
+        'label' => 'Confirmer le mot de passe',
+        'attr' => [
+            'placeholder' => 'Confirmez votre mot de passe',
+            'autocomplete' => 'new-password',
+        ],
+    ],
+])
+
+
         ;
     }
 
