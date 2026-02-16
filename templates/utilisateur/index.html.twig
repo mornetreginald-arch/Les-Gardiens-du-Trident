@@ -8,15 +8,15 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Id_utilisateur</th>
+                {# <th>Id</th>
+                <th>Id_utilisateur</th> #}
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Email</th>
-                <th>Password_hash</th>
+                <th>Mot de Passe</th>
                 <th>Adresse</th>
-                <th>Role</th>
-                <th>actions</th>
+                {# <th>Role</th>
+                <th>actions</th> #}
             </tr>
         </thead>
         <tbody>
@@ -43,5 +43,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_utilisateur_new') }}">Create new</a>
+    <a href="{{ path('app_utilisateur_new') }}">Créer un compte Utilisateur</a>
 {% endblock %}

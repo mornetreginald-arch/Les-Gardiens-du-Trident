@@ -14,13 +14,14 @@ class CategorieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id_categorie')
+            // ->add('id_categorie')
             ->add('nom')
             ->add('description')
             ->add('articles', EntityType::class, [
                 'class' => Articles::class,
                 'choice_label' => 'id',
                 'multiple' => true,
+                'required' => false,
             ])
         ;
     }

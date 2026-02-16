@@ -47,6 +47,10 @@ class Commande
     #[ORM\ManyToMany(targetEntity: Articles::class, mappedBy: 'commande')]
     private Collection $articles;
 
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->chiots = new ArrayCollection();
@@ -183,6 +187,18 @@ class Commande
         if ($this->articles->removeElement($article)) {
             $article->removeCommande($this);
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

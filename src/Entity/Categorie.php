@@ -15,8 +15,8 @@ class Categorie
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $id_categorie = null;
+    // #[ORM\Column]
+    // private ?int $id_categorie = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
@@ -40,17 +40,17 @@ class Categorie
         return $this->id;
     }
 
-    public function getIdCategorie(): ?int
-    {
-        return $this->id_categorie;
-    }
+    // public function getIdCategorie(): ?int
+    // {
+    //     return $this->id_categorie;
+    // }
 
-    public function setIdCategorie(int $id_categorie): static
-    {
-        $this->id_categorie = $id_categorie;
+    // public function setIdCategorie(int $id_categorie): static
+    // {
+    //     $this->id_categorie = $id_categorie;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getNom(): ?string
     {

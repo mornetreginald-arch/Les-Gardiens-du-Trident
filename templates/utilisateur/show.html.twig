@@ -7,14 +7,14 @@
 
     <table class="table">
         <tbody>
-            <tr>
+            {# <tr>
                 <th>Id</th>
                 <td>{{ utilisateur.id }}</td>
             </tr>
             <tr>
                 <th>Id_utilisateur</th>
                 <td>{{ utilisateur.idUtilisateur }}</td>
-            </tr>
+            </tr> #}
             <tr>
                 <th>Nom</th>
                 <td>{{ utilisateur.nom }}</td>
@@ -35,16 +35,16 @@
                 <th>Adresse</th>
                 <td>{{ utilisateur.adresse }}</td>
             </tr>
-            <tr>
+            {# <tr>
                 <th>Role</th>
                 <td>{{ utilisateur.role }}</td>
-            </tr>
+            </tr> #}
         </tbody>
     </table>
 
-    <a href="{{ path('app_utilisateur_index') }}">back to list</a>
+    <a href="{{ path('app_utilisateur_index') }}">Retour</a>
 
-    <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">edit</a>
+    <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">Editer</a>
 
     {{ include('utilisateur/_delete_form.html.twig') }}
 {% endblock %}

@@ -16,8 +16,8 @@ class Articles
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $id_produit = null;
+    // #[ORM\Column]
+    // private ?int $id_produit = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nom_produit = null;
@@ -54,17 +54,17 @@ class Articles
         return $this->id;
     }
 
-    public function getIdProduit(): ?int
-    {
-        return $this->id_produit;
-    }
+    // public function getIdProduit(): ?int
+    // {
+    //     return $this->id_produit;
+    // }
 
-    public function setIdProduit(int $id_produit): static
-    {
-        $this->id_produit = $id_produit;
+    // public function setIdProduit(int $id_produit): static
+    // {
+    //     $this->id_produit = $id_produit;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getNomProduit(): ?string
     {

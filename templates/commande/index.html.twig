@@ -8,27 +8,27 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Id_commande</th>
+                {# <th>Id</th>
+                <th>Id_commande</th> #}
                 <th>Date_commande</th>
-                <th>Total</th>
                 <th>Quantite</th>
-                <th>Prix_unitaire</th>
-                <th>actions</th>
+                <th>Total</th>
+                {# <th>Prix_unitaire</th> #}
+                {# <th>actions</th> #}
             </tr>
         </thead>
         <tbody>
         {% for commande in commandes %}
             <tr>
-                <td>{{ commande.id }}</td>
-                <td>{{ commande.idCommande }}</td>
+                {# <td>{{ commande.id }}</td>
+                <td>{{ commande.idCommande }}</td> #}
                 <td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ commande.total }}</td>
                 <td>{{ commande.quantite }}</td>
-                <td>{{ commande.prixUnitaire }}</td>
+                <td>{{ commande.total }}</td>
+                {# <td>{{ commande.prixUnitaire }}</td> #}
                 <td>
-                    <a href="{{ path('app_commande_show', {'id': commande.id}) }}">show</a>
-                    <a href="{{ path('app_commande_edit', {'id': commande.id}) }}">edit</a>
+                    <a href="{{ path('app_commande_show', {'id': commande.id}) }}">Voir/Modifier votre commande</a>
+                    {# <a href="{{ path('app_commande_edit', {'id': commande.id}) }}">edit</a> #}
                 </td>
             </tr>
         {% else %}

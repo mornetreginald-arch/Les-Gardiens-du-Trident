@@ -13,8 +13,8 @@ class Chiots
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $id_chiot = null;
+    // #[ORM\Column]
+    // private ?int $id_chiot = null;
 
     #[ORM\Column(length: 255)]
     private ?string $sexe = null;
@@ -30,17 +30,17 @@ class Chiots
         return $this->id;
     }
 
-    public function getIdChiot(): ?int
-    {
-        return $this->id_chiot;
-    }
+    // public function getIdChiot(): ?int
+    // {
+    //     return $this->id_chiot;
+    // }
 
-    public function setIdChiot(int $id_chiot): static
-    {
-        $this->id_chiot = $id_chiot;
+    // public function setIdChiot(int $id_chiot): static
+    // {
+    //     $this->id_chiot = $id_chiot;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getSexe(): ?string
     {

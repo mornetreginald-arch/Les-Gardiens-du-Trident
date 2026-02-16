@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
@@ -19,18 +20,23 @@ class Utilisateur
     private ?int $id_utilisateur = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Votre nom est obligatoire.")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Votre prénom est obligatoire.")]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Votre email est obligatoire.")]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Mot de passe obligatoire.")]
     private ?string $password_hash = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Votre adresse est obligatoire.")]
     private ?string $adresse = null;
 
     #[ORM\Column(length: 255)]

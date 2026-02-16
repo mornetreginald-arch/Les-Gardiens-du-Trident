@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+<h1>Profil de {{ user.prenom }}</h1>
+
+<p><strong>Nom :</strong> {{ user.nom }}</p>
+<p><strong>Prénom :</strong> {{ user.prenom }}</p>
+<p><strong>Adresse :</strong> {{ user.adresse }}</p>
+
+<h2>Mes commandes</h2>
+{% if user.commandes|length > 0 %}
+    <ul>
+    {% for commande in user.commandes %}
+        <li>Commande #{{ commande.id }} - {{ commande.createdAt|date('d/m/Y H:i') }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Vous n'avez pas encore de commandes.</p>
+{% endif %}
+
+{% endblock %}

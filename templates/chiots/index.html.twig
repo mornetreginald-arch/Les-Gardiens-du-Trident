@@ -8,23 +8,23 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Id_chiot</th>
+                {# <th>Id</th>
+                <th>Id_chiot</th> #}
                 <th>Sexe</th>
                 <th>Couleur_collier</th>
-                <th>actions</th>
+                {# <th>actions</th> #}
             </tr>
         </thead>
         <tbody>
         {% for chiot in chiots %}
             <tr>
-                <td>{{ chiot.id }}</td>
-                <td>{{ chiot.idChiot }}</td>
+                {# <td>{{ chiot.id }}</td>
+                <td>{{ chiot.idChiot }}</td> #}
                 <td>{{ chiot.sexe }}</td>
                 <td>{{ chiot.couleurCollier }}</td>
                 <td>
-                    <a href="{{ path('app_chiots_show', {'id': chiot.id}) }}">show</a>
-                    <a href="{{ path('app_chiots_edit', {'id': chiot.id}) }}">edit</a>
+                    {# <a href="{{ path('app_chiots_show', {'id': chiot.id}) }}">Modifier</a> #}
+                    <a href="{{ path('app_chiots_edit', {'id': chiot.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_chiots_new') }}">Create new</a>
+    <a href="{{ path('app_chiots_new') }}">Ajouter un nouveau chiot</a>
 {% endblock %}

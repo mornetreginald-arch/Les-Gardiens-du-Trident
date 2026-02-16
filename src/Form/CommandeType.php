@@ -15,8 +15,8 @@ class CommandeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id_commande')
-            ->add('date_commande')
+            // ->add('id_commande')
+            // ->add('date_commande')
             ->add('total')
             ->add('quantite')
             ->add('prix_unitaire')
@@ -26,7 +26,7 @@ class CommandeType extends AbstractType
             ])
             ->add('articles', EntityType::class, [
                 'class' => Articles::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
                 'multiple' => true,
             ])
         ;
