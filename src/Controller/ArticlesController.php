@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Articles;
 use App\Form\ArticlesType;
+use App\Entity\Panier;
+use App\Entity\LignePanier;
 use App\Repository\ArticlesRepository;
 use App\Repository\ChiotsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -84,5 +86,57 @@ final class ArticlesController extends AbstractController
         }
 
         return $this->redirectToRoute('app_articles_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/article/ajouter-au-panier/{id}', name: 'app_cart_add')]
+    public function ajouterAuPanier(int $id, ArticlesRepository $articlesRepo, EntityManagerInterface $em): Response
+    {
+        // 1. Vérifier si l'utilisateur est connecté
+        $user = $this->getUser();
+        if (!$user) {
+            $this->addFlash('danger', 'Veuillez vous connecter pour remplir votre panier.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        // 2. Trouver l'article
+        $article = $articlesRepo->find($id);
+        if (!$article) {
+            throw $this->createNotFoundException("Cet article n'existe pas.");
+        }
+
+        // 3. Récupérer ou créer le Panier de l'utilisateur
+        $panier = $user->getPanier();
+        if (!$panier) {
+            $panier = new Panier();
+            $panier->setUser($user);
+            $em->persist($panier);
+        }
+
+        // 4. Gérer la ligne de panier (vérifier si l'article y est déjà)
+        $ligneExistante = null;
+        foreach ($panier->getLignePaniers() as $ligne) {
+            if ($ligne->getArticle() === $article) {
+                $ligneExistante = $ligne;
+                break;
+            }
+        }
+
+        if ($ligneExistante) {
+            $ligneExistante->setQuantite($ligneExistante->getQuantite() + 1);
+        } else {
+            $nouvelleLigne = new LignePanier();
+            $nouvelleLigne->setArticles($article);
+            $nouvelleLigne->setQuantite(1);
+            $nouvelleLigne->setPanier($panier);
+            $em->persist($nouvelleLigne);
+        }
+
+        // 5. Sauvegarder
+        $em->flush();
+
+        $this->addFlash('success', 'L\'article a été ajouté à votre panier !');
+        
+        // Rediriger vers la page des articles
+        return $this->redirectToRoute('app_articles_index');
     }
 }

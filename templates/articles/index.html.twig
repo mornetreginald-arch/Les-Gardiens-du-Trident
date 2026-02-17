@@ -1,61 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Articles index{% endblock %}
+{% block title %}Articles index
+{% endblock %}
 
 {% block body %}
-    <h1>Articles index</h1>
+	<h1>Articles index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                {# <th>Id</th>
-                <th>Id_produit</th> #}
-                <th>Nom_produit</th>
-                <th>Prix</th>
-                <th>Stock</th>
-                <th>Image</th>
-                {# <th>actions</th> #}
-            </tr>
-        </thead>
-        <tbody>
-        {% for article in articles %}
-            <tr>
-                {# <td>{{ article.id }}</td>
-                <td>{{ article.idProduit }}</td> #}
-                <td>{{ article.nomProduit }}</td>
-                <td>{{ article.prix }}</td>
-                <td>{{ article.stock }}</td>
-                <td>{{ article.image }}</td>
-                <td>
-                    {# <a href="{{ path('app_articles_show', {'id': article.id}) }}">show</a> #}
-                    <a href="{{ path('app_articles_edit', {'id': article.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        <thead>
-            <tr>
-                <th>sexe du chiot</th>
-                <th>Couleur</th>
-            </tr>
-        </thead>
-        {% for chiot in chiots %}
-            <tr>
-                <td>{{ chiot.sexe }}</td>
-                <td>{{ chiot.couleurCollier }}</td>
-                <td>{{ chiot.prix }}</td>
-                <td>
-                    {# <img src="{{ asset('uploads/chiots/' ~ chiot.image) }}" width="50" alt="Chiot"> #}
-                </td>
-            </tr>
-        {% else %}
-            <tr><td colspan="4">Aucun chiot disponible pour le moment</td></tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_articles_new') }}">Créer un nouvel article</a>
-{% endblock %}
+	<table class="table">
+		<thead>
+			<tr>
+				{# <th>Id</th>
+				<th>Id_produit</th> #}
+				<th>Nom_produit</th>
+				<th>Prix</th>
+				<th>Stock</th>
+				<th>Image</th>
+				{# <th>actions</th> #}
+			</tr>
+		</thead>
+		<tbody>
+			{% for article in articles %}
+				<tr>
+					{# <td>{{ article.id }}</td>
+					<td>{{ article.idProduit }}</td> #}
+					<td>{{ article.nomProduit }}</td>
+					<td>{{ article.prix }}</td>
+					<td>{{ article.stock }}</td>
+					<td>{{ article.image }}</td>
+					<td>
+						{# templates/articles/index.html.twig #}
+					</td>
+					<td>
+						<a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn btn-sm btn-success">Ajouter</a>
+					</td>
+					<a href="{{ path('app_articles_edit', {'id': article.id}) }}">Modifier</a>
+				</tr>
+			</td>
+		</tbody>
+	</tr>
+{% else %}
+	<tr>
+		<td colspan="7">no records found</td>
+	</tr>
+{% endfor %}
+<thead>
+	<tr>
+		<th>sexe du chiot</th>
+		<th>Couleur</th>
+	</tr>
+</thead>
+{% for chiot in chiots %}
+	<tr>
+		<td>{{ chiot.sexe }}</td>
+		<td>{{ chiot.couleurCollier }}</td>
+		<td>{{ chiot.prix }}</td>
+		<td>
+			{# <img src="{{ asset('uploads/chiots/' ~ chiot.image) }}" width="50" alt="Chiot"> #}
+            <a href="{{ path('app_cart_add', {'id': chiot.id}) }}" class="btn btn-sm btn-success">Ajouter</a>
+		</td>
+	</tr>
+{% else %}
+	<tr>
+		<td colspan="4">Aucun chiot disponible pour le moment</td>
+	</tr>
+{% endfor %}</tbody></table><a href="{{ path('app_articles_new') }}">Créer un nouvel article</a>{% endblock %}

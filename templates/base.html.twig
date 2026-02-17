@@ -15,7 +15,7 @@
     <header>
     <nav>
         <ul>
-            {# <li><a href="{{ path('app_profile') }}">Accueil</a></li> #}
+            <li><a href="{{ path('app_articles_index') }}">Articles</a></li>
             {% if is_granted('ROLE_ADMIN') %}
         <div class="admin-tools" style="border: 1px solid red; padding: 10px;">
             <strong>Panneau Admin :</strong>
@@ -25,6 +25,7 @@
         </div>
     {% endif %}
             {% if app.user %}
+                <li><a href="{{ path('app_panier') }}">Panier</a></li>
                 <li><a href="{{ path('app_user') }}">Mon profil</a></li>
                 <li><a href="{{ path('app_logout') }}">Se deconnecter</a></li>
 
