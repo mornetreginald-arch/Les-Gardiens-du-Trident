@@ -1,43 +1,58 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>"> {% block stylesheets %}{% endblock %}
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-    <header>
-    <nav>
-        <ul>
-            <li><a href="{{ path('app_articles_index') }}">Articles</a></li>
-            {% if is_granted('ROLE_ADMIN') %}
-        <div class="admin-tools" style="border: 1px solid red; padding: 10px;">
-            <strong>Panneau Admin :</strong>
-            <a href="{{ path('app_articles_new') }}">Ajouter un Article</a>
-            <a href="{{ path('app_chiots_new') }}">Ajouter un Chiot</a>
-            <a href="/admin">Dashboard Global</a>
-        </div>
-    {% endif %}
-            {% if app.user %}
-                <li><a href="{{ path('app_panier') }}">Panier</a></li>
-                <li><a href="{{ path('app_user') }}">Mon profil</a></li>
-                <li><a href="{{ path('app_logout') }}">Se deconnecter</a></li>
+		{% block javascripts %}
+			{% block importmap %}
+				{{ importmap('app') }}
+			{% endblock %}
+		{% endblock %}
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul>
+					{% if is_granted('ROLE_ADMIN') %}
+						<div class="admin-tools" style="border: 1px solid red; padding: 10px;">
+							<strong>Panneau Admin :</strong>
+							<a href="{{ path('app_articles_new') }}">Ajouter un Article</a>
+							<a href="{{ path('app_chiots_new') }}">Ajouter un Chiot</a>
+                            <a href="{{ path('app_categorie_new') }}">Ajouter une Categorie</a>
+						</div>
+					{% endif %}
+					{% if app.user %}
+						<li>
+							<a href="{{ path('app_articles_index') }}">Articles</a>
+						</li>
+						<li>
+							<a href="{{ path('app_panier') }}">Panier</a>
+						</li>
+						<li>
+							<a href="{{ path('app_user') }}">Mon profil</a>
+						</li>
+						<li>
+							<a href="{{ path('app_logout') }}">Se deconnecter</a>
+						</li>
 
-            {% else %}
-                <li><a href="{{ path('app_login') }}">Se connecter</a></li>
-                <li><a href="{{ path('app_register') }}">S'inscrire</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-</header>
+					{% else %}
+						<li>
+							<a href="{{ path('app_login') }}">Se connecter</a>
+						</li>
+						<li>
+							<a href="{{ path('app_register') }}">S'inscrire</a>
+						</li>
+					{% endif %}
+				</ul>
+			</nav>
+		</header>
 
 
-        {% block body %}{% endblock %}
-    </body>
+		{% block body %}{% endblock %}
+	</body>
 </html>

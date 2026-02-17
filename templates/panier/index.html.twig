@@ -1,20 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PanierController!{% endblock %}
+{% block title %}Mon panier{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Mon panier</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {% if panier.lignePaniers|length > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set total = 0 %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/laragon/www/Les-Gardiens-du-Trident/gardiens-trident/src/Controller/PanierController.php</code></li>
-        <li>Your template at <code>C:/laragon/www/Les-Gardiens-du-Trident/gardiens-trident/templates/panier/index.html.twig</code></li>
-    </ul>
-</div>
+{% for lignePanier in panier.lignePaniers %}
+
+    {% if lignePanier.articles %}
+        {% set produit = lignePanier.articles %}
+    {% elseif lignePanier.chiot %}
+        {% set produit = lignePanier.chiot %}
+    {% endif %}
+
+    {% set ligneTotal = produit.prix * lignePanier.quantite %}
+    {% set total = total + ligneTotal %}
+
+    <tr>
+        <td>
+            {% if lignePanier.articles %}
+                {{ lignePanier.articles.nomProduit }}
+            {% else %}
+                Chiot - {{ lignePanier.chiot.sexe }}
+            {% endif %}
+        </td>
+
+        <td>{{ produit.prix }} €</td>
+        <td>{{ lignePanier.quantite }}</td>
+        <td>{{ ligneTotal|number_format(2, ',', ' ') }} €</td>
+        <td>
+            <a href="{{ path('app_panier_remove', {'id': lignePanier.id}) }}"class="btn btn-danger btn-sm">Supprimer</a>
+        </td>
+    </tr>
+
+{% endfor %}
+
+            </tbody>
+        </table>
+
+        <p><strong>Total du panier :</strong> {{ total|number_format(2, ',', ' ') }} €</p>
+    {% else %}
+        <p>Votre panier est vide.</p>
+    {% endif %}
+
 {% endblock %}

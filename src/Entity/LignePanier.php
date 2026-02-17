@@ -6,6 +6,11 @@ use App\Repository\LignePanierRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LignePanierRepository::class)]
+#[ORM\Table(
+    uniqueConstraints: [
+        new ORM\UniqueConstraint(name: "unique_chiot", columns: ["chiot_id"])
+    ]
+)]
 class LignePanier
 {
     #[ORM\Id]
@@ -15,6 +20,9 @@ class LignePanier
 
     #[ORM\ManyToOne(inversedBy: 'lignePaniers')]
     private ?Articles $articles = null;
+
+    #[ORM\ManyToOne]
+    private ?Chiots $chiot = null;
 
     #[ORM\Column]
     private ?int $quantite = null;
@@ -60,6 +68,17 @@ class LignePanier
     {
         $this->panier = $panier;
 
+        return $this;
+    }
+
+    public function getChiot(): ?Chiots
+    {
+        return $this->chiot;
+    }
+
+    public function setChiot(?Chiots $chiot): self
+    {
+        $this->chiot = $chiot;
         return $this;
     }
 }

@@ -15,6 +15,9 @@ class Panier
     #[ORM\Column]
     private ?int $id = null;
 
+    // #[ORM\OneToMany(mappedBy: 'panier', targetEntity: Articles::class)]
+    // private Collection $articles;
+
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?User $user = null;
 
@@ -27,6 +30,7 @@ class Panier
     public function __construct()
     {
         $this->lignePaniers = new ArrayCollection();
+        // $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,4 +79,9 @@ class Panier
 
         return $this;
     }
+
+    // public function getArticles(): Collection
+    // {
+    //     return $this->articles;
+    // }
 }

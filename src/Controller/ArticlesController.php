@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Articles;
+use App\Entity\Chiots;
 use App\Form\ArticlesType;
 use App\Entity\Panier;
 use App\Entity\LignePanier;
@@ -105,7 +106,9 @@ final class ArticlesController extends AbstractController
         }
 
         // 3. Récupérer ou créer le Panier de l'utilisateur
-        $panier = $user->getPanier();
+        $panier = $em->getRepository(Panier::class)->findOneBy([
+    'user' => $user
+]);
         if (!$panier) {
             $panier = new Panier();
             $panier->setUser($user);
@@ -115,7 +118,7 @@ final class ArticlesController extends AbstractController
         // 4. Gérer la ligne de panier (vérifier si l'article y est déjà)
         $ligneExistante = null;
         foreach ($panier->getLignePaniers() as $ligne) {
-            if ($ligne->getArticle() === $article) {
+            if ($ligne->getArticles() === $article) {
                 $ligneExistante = $ligne;
                 break;
             }
@@ -139,4 +142,45 @@ final class ArticlesController extends AbstractController
         // Rediriger vers la page des articles
         return $this->redirectToRoute('app_articles_index');
     }
+
+    #[Route('/cart/add/chiot/{id}', name: 'app_cart_add_chiot')]
+public function addChiot(Chiots $chiot, EntityManagerInterface $em): Response
+{
+    $user = $this->getUser();
+
+    if (!$user) {
+        return $this->redirectToRoute('app_login');
+    }
+
+    // 🔥 Vérifier si déjà réservé
+    $ligneExistante = $em->getRepository(LignePanier::class)
+        ->findOneBy(['chiot' => $chiot]);
+
+    if ($ligneExistante) {
+        $this->addFlash('danger', 'Ce chiot est déjà réservé.');
+        return $this->redirectToRoute('app_articles_index');
+    }
+
+    $panier = $em->getRepository(Panier::class)
+        ->findOneBy(['user' => $user]);
+
+    if (!$panier) {
+        $panier = new Panier();
+        $panier->setUser($user);
+        $em->persist($panier);
+    }
+
+    $ligne = new LignePanier();
+    $ligne->setChiot($chiot);
+    $ligne->setQuantite(1);
+    $ligne->setPanier($panier);
+
+    $em->persist($ligne);
+    $em->flush();
+
+    $this->addFlash('success', 'Chiot réservé avec succès !');
+
+    return $this->redirectToRoute('app_articles_index');
+}
+
 }

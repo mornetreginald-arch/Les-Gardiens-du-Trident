@@ -49,6 +49,8 @@ class Articles
     #[ORM\OneToMany(targetEntity: LignePanier::class, mappedBy: 'articles')]
     private Collection $lignePaniers;
 
+    
+
     public function __construct()
     {
         $this->commande = new ArrayCollection();
@@ -198,7 +200,12 @@ class Articles
                 $lignePanier->setArticles(null);
             }
         }
-
         return $this;
     }
+
+    public function __toString(): string
+{
+    return $this->nom_produit ?? '';
+}
+
 }
