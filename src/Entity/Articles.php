@@ -49,6 +49,12 @@ class Articles
     #[ORM\OneToMany(targetEntity: LignePanier::class, mappedBy: 'articles')]
     private Collection $lignePaniers;
 
+    /**
+     * @var Collection<int, LigneCommande>
+     */
+    #[ORM\OneToMany(targetEntity: LigneCommande::class, mappedBy: 'articles')]
+    private Collection $ligneCommandes;
+
     
 
     public function __construct()
@@ -56,6 +62,7 @@ class Articles
         $this->commande = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->lignePaniers = new ArrayCollection();
+        $this->ligneCommandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -207,5 +214,35 @@ class Articles
 {
     return $this->nom_produit ?? '';
 }
+
+    /**
+     * @return Collection<int, LigneCommande>
+     */
+    public function getLigneCommandes(): Collection
+    {
+        return $this->ligneCommandes;
+    }
+
+    public function addLigneCommande(LigneCommande $ligneCommande): static
+    {
+        if (!$this->ligneCommandes->contains($ligneCommande)) {
+            $this->ligneCommandes->add($ligneCommande);
+            $ligneCommande->setArticles($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLigneCommande(LigneCommande $ligneCommande): static
+    {
+        if ($this->ligneCommandes->removeElement($ligneCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($ligneCommande->getArticles() === $this) {
+                $ligneCommande->setArticles(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

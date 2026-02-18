@@ -13,7 +13,8 @@
 {% if app.user.commandes|length > 0 %}
     <ul>
     {% for commande in app.user.commandes %}
-        <li>Commande #{{ commande.id }} - {{ commande.createdAt|date('d/m/Y H:i') }}</li>
+        <li>Commande #{{ commande.id }} - {{ commande.dateCommande|date('d/m/Y') }} - {{ commande.total }} €</li>
+        <a href="{{ path('app_commande_index') }}" class="btn btn-success">Voir le detail de ma commande</a>
     {% endfor %}
     </ul>
 {% else %}

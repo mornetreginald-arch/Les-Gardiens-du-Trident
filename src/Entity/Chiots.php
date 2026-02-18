@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ChiotsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,20 @@ class Chiots
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $prix = null;
+
+    /**
+     * @var Collection<int, LigneCommande>
+     */
+    #[ORM\OneToMany(targetEntity: LigneCommande::class, mappedBy: 'chiot')]
+    private Collection $ligneCommandes;
+
+    #[ORM\Column]
+    private ?bool $estVendu = null;
+
+    public function __construct()
+    {
+        $this->ligneCommandes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +106,48 @@ class Chiots
     public function setPrix(string $prix): static
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LigneCommande>
+     */
+    public function getLigneCommandes(): Collection
+    {
+        return $this->ligneCommandes;
+    }
+
+    public function addLigneCommande(LigneCommande $ligneCommande): static
+    {
+        if (!$this->ligneCommandes->contains($ligneCommande)) {
+            $this->ligneCommandes->add($ligneCommande);
+            $ligneCommande->setChiot($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLigneCommande(LigneCommande $ligneCommande): static
+    {
+        if ($this->ligneCommandes->removeElement($ligneCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($ligneCommande->getChiot() === $this) {
+                $ligneCommande->setChiot(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isEstVendu(): ?bool
+    {
+        return $this->estVendu;
+    }
+
+    public function setEstVendu(bool $estVendu): static
+    {
+        $this->estVendu = $estVendu;
 
         return $this;
     }

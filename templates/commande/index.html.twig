@@ -1,43 +1,75 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commande index{% endblock %}
+{% block title %}Commande index
+{% endblock %}
 
 {% block body %}
-    <h1>Commande index</h1>
+	<h1>Commande index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                {# <th>Id</th>
-                <th>Id_commande</th> #}
-                <th>Date_commande</th>
-                <th>Quantite</th>
-                <th>Total</th>
-                {# <th>Prix_unitaire</th> #}
-                {# <th>actions</th> #}
-            </tr>
-        </thead>
-        <tbody>
-        {% for commande in commandes %}
-            <tr>
-                {# <td>{{ commande.id }}</td>
-                <td>{{ commande.idCommande }}</td> #}
-                <td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ commande.quantite }}</td>
-                <td>{{ commande.total }}</td>
-                {# <td>{{ commande.prixUnitaire }}</td> #}
-                <td>
-                    <a href="{{ path('app_commande_show', {'id': commande.id}) }}">Voir/Modifier votre commande</a>
-                    {# <a href="{{ path('app_commande_edit', {'id': commande.id}) }}">edit</a> #}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>{# <th>Id</th>
+												<th>Id_commande</th> #}
+				{# <th>Date_commande</th>
+												<th>Quantite</th>
+												<th>Total</th> #}
+				{# <th>Prix_unitaire</th> #}
+				{# <th>actions</th> #}
+			</tr>
+		</thead>
+		<tbody>
+			{% for commande in commandes %}
 
-    <a href="{{ path('app_commande_new') }}">Create new</a>
-{% endblock %}
+				<h3>Commande #{{ commande.id }}</h3>
+				<p>Date :
+					{{ commande.dateCommande|date('d/m/Y H:i') }}</p>
+				<p>Total :
+					{{ commande.total }}
+					€</p>
+
+
+				<table>
+					<thead>
+						<tr>
+							<th>Produit</th>
+							<th>Quantité</th>
+							<th>Prix</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						{% for ligne in commande.ligneCommandes %}
+
+							<tr>
+								<td>
+									{% if ligne.articles %}
+										{{ ligne.articles.nomProduit }}
+									{% elseif ligne.chiot %}
+										Chiot -
+										{{ ligne.chiot.sexe }}
+									{% endif %}
+								</td>
+
+								<td>{{ ligne.quantite }}</td>
+								<td>{{ ligne.prix }}
+									€</td>
+							</tr>
+
+						{% endfor %}
+					</tbody>
+				</table>
+
+				{% if is_granted('ROLE_ADMIN') %}
+					{# On utilise un petit formulaire pour la sécurité (méthode DELETE/POST) #}
+					<form method="post" action="{{ path('app_commande_delete', {'id': commande.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commande.id) }}">
+						<button class="btn btn-danger">Supprimer la commande</button>
+					</form>
+				{% endif %}
+			{% else %}
+				<p>Aucune commande trouvée.</p>
+
+			{% endfor %}
+
+		</tbody>
+	{% endblock %}

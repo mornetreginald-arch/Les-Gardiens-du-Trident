@@ -13,7 +13,7 @@
 								<th>Id_produit</th> #}
 				<th>Nom_produit</th>
 				<th>Prix</th>
-				<th>Stock</th>
+				{# <th>Stock</th> #}
 				<th>Image</th>
 				{# <th>actions</th> #}
 			</tr>
@@ -23,7 +23,7 @@
 				<tr>
 					<td>{{ article.nomProduit }}</td>
 					<td>{{ article.prix }}</td>
-					<td>{{ article.stock }}</td>
+					{# <td>{{ article.stock }}</td> #}
 					<td>{{ article.image }}</td>
 					<td>
 						<a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn btn-sm btn-success">Ajouter</a>
@@ -51,10 +51,7 @@
 				<td>{{ chiot.prix }}</td>
 				<td>
 					{# <img src="{{ asset('uploads/chiots/' ~ chiot.image) }}" width="50" alt="Chiot"> #}
-<a href="{{ path('app_cart_add_chiot', {'id': chiot.id}) }}" 
-   class="btn btn-sm btn-success">
-   Ajouter
-</a>
+				<a href="{{ path('app_cart_add_chiot', {'id': chiot.id}) }}" class="btn btn-sm btn-success">Ajouter</a>
 				</td>
 			</tr>
 		{% else %}
