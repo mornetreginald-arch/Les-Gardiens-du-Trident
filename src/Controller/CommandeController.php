@@ -16,12 +16,23 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class CommandeController extends AbstractController
 {
     #[Route(name: 'app_commande_index', methods: ['GET'])]
-    public function index(CommandeRepository $commandeRepository): Response
-    {
-        return $this->render('commande/index.html.twig', [
-            'commandes' => $commandeRepository->findAll(),
-        ]);
+    #[Route('/mes-commandes', name: 'app_mes_commandes')]
+public function mesCommandes(EntityManagerInterface $em): Response
+{
+    $user = $this->getUser();
+
+    if (!$user) {
+        return $this->redirectToRoute('app_login');
     }
+
+    $commandes = $em->getRepository(Commande::class)
+        ->findBy(['user' => $user], ['id' => 'DESC']);
+
+    return $this->render('commande/index.html.twig', [
+        'commandes' => $commandes,
+    ]);
+}
+
 
     #[Route('/new', name: 'app_commande_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -44,12 +55,29 @@ final class CommandeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_commande_show', methods: ['GET'])]
+    
     public function show(Commande $commande): Response
-    {
-        return $this->render('commande/show.html.twig', [
-            'commande' => $commande,
-        ]);
+{
+    $user = $this->getUser();
+
+    if (!$this->isGranted('ROLE_ADMIN') && $commande->getUser() !== $this->getUser()) {
+    throw $this->createAccessDeniedException();
+}
+
+
+    if (!$user) {
+        return $this->redirectToRoute('app_login');
     }
+
+    // 🔒 Sécurité : empêcher de voir la commande d’un autre
+    if ($commande->getUser() !== $user) {
+        throw $this->createAccessDeniedException();
+    }
+
+    return $this->render('commande/show.html.twig', [
+        'commande' => $commande,
+    ]);
+}
 
     #[Route('/{id}/edit', name: 'app_commande_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Commande $commande, EntityManagerInterface $entityManager): Response

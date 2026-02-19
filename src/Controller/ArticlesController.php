@@ -87,11 +87,8 @@ final class ArticlesController extends AbstractController
     =====================================================
     */
     #[Route('/article/ajouter-au-panier/{id}', name: 'app_cart_add')]
-    public function ajouterAuPanier(
-        int $id,
-        ArticlesRepository $articlesRepo,
-        EntityManagerInterface $em
-    ): Response {
+    public function ajouterAuPanier(int $id,ArticlesRepository $articlesRepo,EntityManagerInterface $em): Response {
+        
         $user = $this->getUser();
 
         if (!$user) {
@@ -106,6 +103,7 @@ final class ArticlesController extends AbstractController
             return $this->redirectToRoute('app_articles_index');
         }
 
+        
         if (!$article) {
             throw $this->createNotFoundException("Article introuvable.");
         }
@@ -144,11 +142,7 @@ final class ArticlesController extends AbstractController
     =====================================================
     */
     #[Route('/cart/add/chiot/{id}', name: 'app_cart_add_chiot')]
-    public function addChiot(
-        Chiots $chiot,
-        EntityManagerInterface $em,
-        ArticlesRepository $articlesRepository
-    ): Response {
+    public function addChiot(Chiots $chiot,EntityManagerInterface $em,ArticlesRepository $articlesRepository): Response {
         $user = $this->getUser();
 
         if (!$user) {

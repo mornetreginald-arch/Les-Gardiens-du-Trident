@@ -7,14 +7,14 @@
 
     <table class="table">
         <tbody>
-            <tr>
+            {# <tr>
                 <th>Id</th>
                 <td>{{ commande.id }}</td>
-            </tr>
-            <tr>
-                <th>Id_commande</th>
-                <td>{{ commande.idCommande }}</td>
-            </tr>
+            </tr> #}
+            {# <tr>
+                <th>articles</th>
+                <td>{{ commande.nomProduit }}</td>
+            </tr> #}
             <tr>
                 <th>Date_commande</th>
                 <td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d H:i:s') : '' }}</td>
@@ -23,20 +23,22 @@
                 <th>Total</th>
                 <td>{{ commande.total }}</td>
             </tr>
-            <tr>
+            {# <tr>
                 <th>Quantite</th>
                 <td>{{ commande.quantite }}</td>
-            </tr>
-            <tr>
+            </tr> #}
+            {# <tr>
                 <th>Prix_unitaire</th>
                 <td>{{ commande.prixUnitaire }}</td>
-            </tr>
+            </tr> #}
         </tbody>
     </table>
 
     <a href="{{ path('app_commande_index') }}">Retour à la liste</a>
 
-    <a href="{{ path('app_commande_edit', {'id': commande.id}) }}">Modifier</a>
+    {# <a href="{{ path('app_commande_edit', {'id': commande.id}) }}">Modifier</a> #}
 
+    {% if is_granted('ROLE_ADMIN') %}
     {{ include('commande/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

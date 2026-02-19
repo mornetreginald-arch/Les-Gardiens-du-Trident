@@ -47,14 +47,16 @@
 							{# <a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn btn-sm btn-success">Ajouter</a> #}
 						{% endif %}
 
+						{% if is_granted('ROLE_ADMIN') %}
 						<div class="mt-1">
 							<a href="{{ path('app_articles_edit', {'id': article.id}) }}">Modifier</a>
 						</div>
+						{% endif %}
 
 						{% if article.prix <= 0 %}
 							<span class="text-muted">Inclus avec réservation</span>
-						{% elseif article.stock <= 0 %}
-							<span class="text-danger fw-bold">Rupture de stock</span>
+						{# {% elseif article.stock <= 0 %}
+							<span class="text-danger fw-bold">Rupture de stock</span> #}
 						{% else %}
 							<a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn btn-sm btn-success">
 								Ajouter
@@ -97,9 +99,8 @@
 
 		</tbody>
 	</table>
-
-	<a href="{{ path('app_articles_new') }}" class="btn btn-primary">
-		Créer un nouvel article
-	</a>
+	{% if is_granted('ROLE_ADMIN') %}
+	<a href="{{ path('app_articles_new') }}" class="btn btn-primary">Créer un nouvel article</a>
+	{% endif %}
 
 {% endblock %}

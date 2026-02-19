@@ -9,23 +9,28 @@
 	<table class="table">
 		<thead>
 			<tr>{# <th>Id</th>
-												<th>Id_commande</th> #}
+																<th>Id_commande</th> #}
 				{# <th>Date_commande</th>
-												<th>Quantite</th>
-												<th>Total</th> #}
+																<th>Quantite</th>
+																<th>Total</th> #}
 				{# <th>Prix_unitaire</th> #}
 				{# <th>actions</th> #}
 			</tr>
 		</thead>
 		<tbody>
 			{% for commande in commandes %}
-
-				<h3>Commande #{{ commande.id }}</h3>
-				<p>Date :
-					{{ commande.dateCommande|date('d/m/Y H:i') }}</p>
-				<p>Total :
+				<p>
+					Commande #{{ commande.id }}
+					-
+					{{ commande.dateCommande|date('d/m/Y') }}
+					-
 					{{ commande.total }}
-					€</p>
+					€
+
+					<a href="{{ path('app_commande_show', {'id': commande.id}) }}">
+						Voir
+					</a>
+				</p>
 
 
 				<table>
@@ -42,17 +47,18 @@
 
 							<tr>
 								<td>
-									{% if ligne.articles %}
-										{{ ligne.articles.nomProduit }}
-									{% elseif ligne.chiot %}
-										Chiot -
-										{{ ligne.chiot.sexe }}
-									{% endif %}
-								</td>
+								{% if ligne.articles %}
+									{{ ligne.articles.nomProduit }}
+								{% elseif ligne.chiot %}
+									Chiot -
+									{{ ligne.chiot.sexe }}
+									(Collier
+									{{ ligne.chiot.couleurCollier }})
+								{% endif %}
 
-								<td>{{ ligne.quantite }}</td>
-								<td>{{ ligne.prix }}
-									€</td>
+								— Quantité :
+								{{ ligne.quantite }}
+								<td>
 							</tr>
 
 						{% endfor %}
