@@ -193,13 +193,20 @@ if ($lignePanier->getArticles()) {
         $clientVille = $user->getCodePostal() . " " . $user->getVille();
         $clientPays = $user->getPays();
 
+        $logoPath = $this->getParameter('kernel.project_dir') . '/public/images/logo.png';
+
         $email = (new Email())
             ->from('noreply@gardiens-trident.local')
             ->to('admin@admin.fr')
             ->subject('Nouvelle commande #' . $commande->getId())
+            ->embedFromPath($logoPath, 'logo_cid')
             ->html("
             <h1>Nouvelle commande reçue</h1>
 
+            <div style='text-align:center;'>
+            <img src='cid:logo_cid' alt='Logo' style='width:150px; margin-bottom:20px;'>
+            </div>
+            
             <h2>Informations client</h2>
             <p><strong>Nom :</strong> {$clientNom}</p>
             <p><strong>Email :</strong> {$clientEmail}</p>

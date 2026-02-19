@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Commande;
 use App\Form\CommandeType;
-use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,9 +14,13 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/commande')]
 final class CommandeController extends AbstractController
 {
-    #[Route(name: 'app_commande_index', methods: ['GET'])]
-    #[Route('/mes-commandes', name: 'app_mes_commandes')]
-public function mesCommandes(EntityManagerInterface $em): Response
+    /*
+    ============================
+    👑 ADMIN → TOUTES COMMANDES
+    ============================
+    */
+    #[Route('/', name: 'app_commande_index', methods: ['GET'])]
+public function index(EntityManagerInterface $em): Response
 {
     $user = $this->getUser();
 
@@ -25,78 +28,79 @@ public function mesCommandes(EntityManagerInterface $em): Response
         return $this->redirectToRoute('app_login');
     }
 
+    // 👑 ADMIN → voir toutes les commandes groupées par utilisateur
+    if ($this->isGranted('ROLE_ADMIN')) {
+
+        $users = $em->getRepository(\App\Entity\User::class)->findAll();
+
+        return $this->render('commande/index.html.twig', [
+            'users' => $users,
+            'is_admin' => true,
+        ]);
+    }
+
+    // 👤 UTILISATEUR → voir uniquement ses commandes
     $commandes = $em->getRepository(Commande::class)
         ->findBy(['user' => $user], ['id' => 'DESC']);
 
     return $this->render('commande/index.html.twig', [
         'commandes' => $commandes,
+        'is_admin' => false,
     ]);
 }
 
 
-    #[Route('/new', name: 'app_commande_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    /*
+    ============================
+    👤 UTILISATEUR → SES COMMANDES
+    ============================
+    */
+    #[Route('/mes-commandes', name: 'app_mes_commandes')]
+    public function mesCommandes(EntityManagerInterface $em): Response
     {
-        $commande = new Commande();
-        $form = $this->createForm(CommandeType::class, $commande);
-        $form->handleRequest($request);
+        $user = $this->getUser();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($commande);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_commande_index', [], Response::HTTP_SEE_OTHER);
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('commande/new.html.twig', [
-            'commande' => $commande,
-            'form' => $form,
+        $commandes = $em->getRepository(Commande::class)
+            ->findBy(['user' => $user], ['id' => 'DESC']);
+
+        return $this->render('commande/index.html.twig', [
+            'commandes' => $commandes,
         ]);
     }
 
+    /*
+    ============================
+    🔍 DÉTAIL D’UNE COMMANDE
+    ============================
+    */
     #[Route('/{id}', name: 'app_commande_show', methods: ['GET'])]
-    
     public function show(Commande $commande): Response
-{
-    $user = $this->getUser();
-
-    if (!$this->isGranted('ROLE_ADMIN') && $commande->getUser() !== $this->getUser()) {
-    throw $this->createAccessDeniedException();
-}
-
-
-    if (!$user) {
-        return $this->redirectToRoute('app_login');
-    }
-
-    // 🔒 Sécurité : empêcher de voir la commande d’un autre
-    if ($commande->getUser() !== $user) {
-        throw $this->createAccessDeniedException();
-    }
-
-    return $this->render('commande/show.html.twig', [
-        'commande' => $commande,
-    ]);
-}
-
-    #[Route('/{id}/edit', name: 'app_commande_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Commande $commande, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(CommandeType::class, $commande);
-        $form->handleRequest($request);
+        $user = $this->getUser();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_commande_index', [], Response::HTTP_SEE_OTHER);
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('commande/edit.html.twig', [
+        // Admin peut tout voir
+        if (!$this->isGranted('ROLE_ADMIN') && $commande->getUser() !== $user) {
+            throw $this->createAccessDeniedException();
+        }
+
+        return $this->render('commande/show.html.twig', [
             'commande' => $commande,
-            'form' => $form,
         ]);
     }
 
+    /*
+    ============================
+    🗑 SUPPRESSION (ADMIN)
+    ============================
+    */
     #[Route('/{id}', name: 'app_commande_delete', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Commande $commande, EntityManagerInterface $entityManager): Response
@@ -106,6 +110,6 @@ public function mesCommandes(EntityManagerInterface $em): Response
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_commande_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_commande_index');
     }
 }
