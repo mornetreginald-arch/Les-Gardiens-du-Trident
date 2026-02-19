@@ -16,6 +16,8 @@ class ArticlesRepository extends ServiceEntityRepository
         parent::__construct($registry, Articles::class);
     }
 
+    
+
     //    /**
     //     * @return Articles[] Returns an array of Articles objects
     //     */

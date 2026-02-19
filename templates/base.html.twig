@@ -19,11 +19,12 @@
 			<nav>
 				<ul>
 					{% if is_granted('ROLE_ADMIN') %}
-						<div class="admin-tools" style="border: 1px solid red; padding: 10px;">
+						<div class="admin-tools" style="border: 1px solid red; padding: 10px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
 							<strong>Panneau Admin :</strong>
 							<a href="{{ path('app_articles_new') }}">Ajouter un Article</a>
 							<a href="{{ path('app_chiots_new') }}">Ajouter un Chiot</a>
                             <a href="{{ path('app_categorie_new') }}">Ajouter une Categorie</a>
+							<a href="{{ path('app_commande_index') }}">Modifier/Supprimer une commande</a>
 						</div>
 					{% endif %}
 					{% if app.user %}

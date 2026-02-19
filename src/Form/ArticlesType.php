@@ -7,6 +7,7 @@ use App\Entity\Categorie;
 use App\Entity\Commande;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +18,10 @@ class ArticlesType extends AbstractType
         $builder
             // ->add('id_produit')
             ->add('nom_produit')
-            ->add('prix')
+            ->add('prix', MoneyType::class, [
+                'required' => false,
+                'empty_data' => '0',
+            ])
             ->add('stock')
             ->add('image')
             // ->add('commande', EntityType::class, [

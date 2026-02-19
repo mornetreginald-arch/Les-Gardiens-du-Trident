@@ -38,7 +38,7 @@ class Chiots
     private Collection $ligneCommandes;
 
     #[ORM\Column]
-    private ?bool $estVendu = null;
+    private ?bool $estVendu = false;
 
     public function __construct()
     {
@@ -145,7 +145,7 @@ class Chiots
         return $this->estVendu;
     }
 
-    public function setEstVendu(bool $estVendu): static
+    public function setEstVendu(bool $estVendu): self
     {
         $this->estVendu = $estVendu;
 

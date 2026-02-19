@@ -40,10 +40,7 @@ final class PanierController extends AbstractController
 }
 
 #[Route('/panier/supprimer/{id}', name: 'app_panier_remove')]
-public function remove(
-    LignePanier $lignePanier,
-    EntityManagerInterface $em
-): Response
+public function remove(LignePanier $lignePanier,EntityManagerInterface $em): Response
 {
     $user = $this->getUser();
 
@@ -54,6 +51,20 @@ public function remove(
     // Vérifier que la ligne appartient bien à l'utilisateur
     if ($lignePanier->getPanier()->getUser() !== $user) {
         throw $this->createAccessDeniedException();
+    }
+
+    $panier = $lignePanier->getPanier();
+
+
+    if ($lignePanier->getChiot()) {
+
+        // Supprimer tous les articles inclus (prix = 0)
+        foreach ($panier->getLignePaniers() as $ligne) {
+
+            if ($ligne->getArticles() && $ligne->getArticles()->getPrix() == 0) {
+                $em->remove($ligne);
+            }
+        }
     }
 
     $em->remove($lignePanier);
@@ -81,8 +92,6 @@ public function valider(EntityManagerInterface $em): Response
         return $this->redirectToRoute('app_panier');
     }
 
-    // 🔥 ICI on met le code que je t’ai donné
-
     $commande = new Commande();
     $commande->setUser($user);
     $commande->setDateCommande(new \DateTime());
@@ -97,24 +106,49 @@ public function valider(EntityManagerInterface $em): Response
         $ligneCommande->setCommande($commande);
         $ligneCommande->setQuantite($lignePanier->getQuantite());
 
+        // 🔵 ARTICLE
         if ($lignePanier->getArticles()) {
+
             $article = $lignePanier->getArticles();
+
+            // Vérifier le stock
+            if ($article->getStock() < $lignePanier->getQuantite()) {
+                $this->addFlash('danger', 'Stock insuffisant pour ' . $article->getNomProduit());
+                return $this->redirectToRoute('app_panier');
+            }
+
+            // Réduire le stock
+            $article->setStock(
+                $article->getStock() - $lignePanier->getQuantite()
+            );
+
             $ligneCommande->setArticles($article);
-            $ligneCommande->setPrix((float) $article->getPrix());
+            $ligneCommande->setPrix($article->getPrix());
+
             $total += $article->getPrix() * $lignePanier->getQuantite();
         }
 
+        // 🐶 CHIOT
         if ($lignePanier->getChiot()) {
+
             $chiot = $lignePanier->getChiot();
-            $ligneCommande->setChiot($chiot);
-            $ligneCommande->setPrix((float) $chiot->getPrix());
-            $total += $chiot->getPrix() * $lignePanier->getQuantite();
+
+            if ($chiot->isEstVendu()) {
+                $this->addFlash('danger', 'Ce chiot est déjà vendu.');
+                return $this->redirectToRoute('app_panier');
+            }
 
             $chiot->setEstVendu(true);
+            $em->persist($chiot);
+
+            $ligneCommande->setChiot($chiot);
+            $ligneCommande->setPrix($chiot->getPrix());
+
+            $total += $chiot->getPrix();
         }
 
         $em->persist($ligneCommande);
-        $em->remove($lignePanier); // 🔥 vide le panier
+        $em->remove($lignePanier);
     }
 
     $commande->setTotal($total);
@@ -127,3 +161,6 @@ public function valider(EntityManagerInterface $em): Response
 }
 
 }
+
+
+

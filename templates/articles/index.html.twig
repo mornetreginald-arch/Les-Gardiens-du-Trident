@@ -9,56 +9,97 @@
 	<table class="table">
 		<thead>
 			<tr>
-				{# <th>Id</th>
-								<th>Id_produit</th> #}
 				<th>Nom_produit</th>
 				<th>Prix</th>
-				{# <th>Stock</th> #}
 				<th>Image</th>
-				{# <th>actions</th> #}
+				<th>Action</th>
 			</tr>
 		</thead>
+
 		<tbody>
+
+			{# ================= ARTICLES ================= #}
 			{% for article in articles %}
 				<tr>
 					<td>{{ article.nomProduit }}</td>
-					<td>{{ article.prix }}</td>
-					{# <td>{{ article.stock }}</td> #}
+					<td>{{ article.prix }}
+						€</td>
 					<td>{{ article.image }}</td>
+
 					<td>
-						<a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn btn-sm btn-success">Ajouter</a>
-					</td>
-					<td>
-						<a href="{{ path('app_articles_edit', {'id': article.id}) }}">Modifier</a>
+
+						{# 🔥 Affichage stock restant #}
+						{% if article.stock > 0 %}
+							{% if article.stock <= 3 %}
+								<small class="text-danger d-block">Plus que
+									{{ article.stock }}
+									en stock !</small>
+							{% else %}
+								<small class="text-muted d-block">Stock restant :
+									{{ article.stock }}</small>
+							{% endif %}
+						{% endif %}
+
+						{# 🔥 Gestion rupture comme chiot #}
+						{% if article.stock <= 0 %}
+							<span class="text-danger fw-bold">Rupture de stock</span>
+						{% else %}
+							{# <a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn btn-sm btn-success">Ajouter</a> #}
+						{% endif %}
+
+						<div class="mt-1">
+							<a href="{{ path('app_articles_edit', {'id': article.id}) }}">Modifier</a>
+						</div>
+
+						{% if article.prix <= 0 %}
+							<span class="text-muted">Inclus avec réservation</span>
+						{% elseif article.stock <= 0 %}
+							<span class="text-danger fw-bold">Rupture de stock</span>
+						{% else %}
+							<a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn btn-sm btn-success">
+								Ajouter
+							</a>
+						{% endif %}
+
 					</td>
 				</tr>
+
 			{% else %}
 				<tr>
-					<td colspan="6">no records found</td>
+					<td colspan="4">Aucun article trouvé</td>
 				</tr>
 			{% endfor %}
+
+			{# ================= CHIOTS ================= #}
+			{% for chiot in chiots %}
+				<tr>
+					<td>{{ chiot.sexe }}
+						(Chiot)</td>
+					<td>{{ chiot.prix }}
+						€</td>
+					<td>Collier :
+						{{ chiot.couleurCollier }}</td>
+
+					<td>
+						{% if chiot.estVendu %}
+							<span class="text-danger fw-bold">Déjà réservé</span>
+						{% else %}
+							<a href="{{ path('app_cart_add_chiot', {'id': chiot.id}) }}" class="btn btn-warning btn-sm">Réserver</a>
+						{% endif %}
+					</td>
+				</tr>
+
+			{% else %}
+				<tr>
+					<td colspan="4">Aucun chiot disponible</td>
+				</tr>
+			{% endfor %}
+
 		</tbody>
-		<thead>
-			<tr>
-				<th>sexe du chiot</th>
-				<th>Couleur</th>
-			</tr>
-		</thead>
-		{% for chiot in chiots %}
-			<tr>
-				<td>{{ chiot.sexe }}</td>
-				<td>{{ chiot.couleurCollier }}</td>
-				<td>{{ chiot.prix }}</td>
-				<td>
-					{# <img src="{{ asset('uploads/chiots/' ~ chiot.image) }}" width="50" alt="Chiot"> #}
-				<a href="{{ path('app_cart_add_chiot', {'id': chiot.id}) }}" class="btn btn-sm btn-success">Ajouter</a>
-				</td>
-			</tr>
-		{% else %}
-			<tr>
-				<td colspan="4">Aucun chiot disponible pour le moment</td>
-			</tr>
-		{% endfor %}
-	</tbody>
-</table>
-<a href="{{ path('app_articles_new') }}">Créer un nouvel article</a>{% endblock %}
+	</table>
+
+	<a href="{{ path('app_articles_new') }}" class="btn btn-primary">
+		Créer un nouvel article
+	</a>
+
+{% endblock %}
