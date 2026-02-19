@@ -6,6 +6,8 @@ use App\Entity\Commande;
 use App\Entity\LignePanier;
 use App\Entity\Panier;
 use App\Entity\LigneCommande;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use App\Repository\PanierRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -76,7 +78,7 @@ public function remove(LignePanier $lignePanier,EntityManagerInterface $em): Res
 }
 
 #[Route('/panier/valider', name: 'app_panier_valider')]
-public function valider(EntityManagerInterface $em): Response
+public function valider(EntityManagerInterface $em, MailerInterface $mailer): Response
 {
     $user = $this->getUser();
 
@@ -155,10 +157,99 @@ public function valider(EntityManagerInterface $em): Response
 
     $em->flush();
 
+    /*
+    ======================
+    ENVOI EMAIL ADMIN
+    ======================
+    */
+
+    $details = "";
+
+    foreach ($commande->getLigneCommandes() as $ligne) {
+
+        if ($ligne->getArticles()) {
+            $details .= "
+    <tr>
+        <td>Article</td>
+        <td>{$article->getNomProduit()}</td>
+        <td>{$lignePanier->getQuantite()}</td>
+        <td>{$article->getPrix()} €</td>
+    </tr>
+";
+        }
+
+        if ($ligne->getChiot()) {
+            $details .= "
+    <tr>
+        <td>Chiot</td>
+        <td>{$chiot->getSexe()} - Collier {$chiot->getCouleurCollier()}</td>
+        <td>1</td>
+        <td>{$chiot->getPrix()} €</td>
+    </tr>
+";
+        }
+
+        $details .= " | Quantité : " . $ligne->getQuantite();
+        $details .= " | Prix : " . $ligne->getPrix() . " € <br>";
+    }
+
+    $clientNom = $user->getPrenom() . " " . $user->getNom();
+$clientEmail = $user->getEmail();
+$clientTelephone = $user->getTelephone();
+$clientAdresse = $user->getRue();
+$clientVille = $user->getCodePostal() . " " . $user->getVille();
+$clientPays = $user->getPays();
+
+
+    $email = (new Email())
+    ->from('noreply@gardiens-trident.local')
+    ->to('admin@admin.fr')
+    ->subject('Nouvelle commande #' . $commande->getId())
+    ->html("
+        <h1>Nouvelle commande reçue</h1>
+
+        <h2>Informations client</h2>
+        <p><strong>Nom :</strong> {$clientNom}</p>
+        <p><strong>Email :</strong> {$clientEmail}</p>
+        <p><strong>Téléphone :</strong> {$clientTelephone}</p>
+        <p><strong>Adresse :</strong> {$clientAdresse}</p>
+        <p><strong>Ville :</strong> {$clientVille}</p>
+        <p><strong>Pays :</strong> {$clientPays}</p>
+
+        <hr>
+
+        <h2>Détail de la commande</h2>
+
+        <table border='1' cellpadding='5' cellspacing='0'>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                {$details}
+            </tbody>
+        </table>
+
+        <h3>Total : {$total} €</h3>
+    ");
+
+$mailer->send($email);
+
+
+
+
+    $mailer->send($email);
+
+
     $this->addFlash('success', 'Commande validée avec succès !');
 
     return $this->redirectToRoute('app_articles_index');
 }
+
 
 }
 
