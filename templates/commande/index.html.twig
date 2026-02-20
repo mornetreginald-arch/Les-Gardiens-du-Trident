@@ -1,86 +1,97 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commandes{% endblock %}
+{% block title %}Commandes
+{% endblock %}
 
 {% block body %}
 
-{% if is_admin %}
+	{% if is_admin %}
 
-    <h1>Commandes par utilisateur</h1>
+		<h1>Commandes par utilisateur</h1>
 
-    {% for user in users %}
-        {% if user.commandes|length > 0 %}
-            <hr>
-            <h2>{{ user.prenom }} {{ user.nom }} ({{ user.email }})</h2>
+		{% for user in users %}
+			{% if user.commandes|length > 0 %}
+				<hr>
+				<h2>{{ user.prenom }}
+					{{ user.nom }}
+					({{ user.email }})</h2>
 
-            {% for commande in user.commandes %}
-                <p>
-                    Commande #{{ commande.id }} -
-                    {{ commande.dateCommande|date('d/m/Y') }} -
-                    {{ commande.total }} €
-                </p>
+				{% for commande in user.commandes %}
+					<p>
+						Commande #{{ commande.id }}
+						-
+						{{ commande.dateCommande|date('d/m/Y') }}
+						-
+						{{ commande.total }}
+						€
+					</p>
 
-                <ul>
-                    {% for ligne in commande.ligneCommandes %}
-                        <li>
-                            {% if ligne.articles %}
-                                {{ ligne.articles.nomProduit }}
-                            {% elseif ligne.chiot %}
-                                Chiot - {{ ligne.chiot.sexe }}
-                                (Collier {{ ligne.chiot.couleurCollier }})
-                            {% endif %}
-                            — Quantité : {{ ligne.quantite }}
-                        </li>
-                    {% endfor %}
-                </ul>
+					<ul>
+						{% for ligne in commande.ligneCommandes %}
+							<li>
+								{% if ligne.articles %}
+									{{ ligne.articles.nomProduit }}
+								{% elseif ligne.chiot %}
+									Chiot -
+									{{ ligne.chiot.sexe }}
+									(Collier
+									{{ ligne.chiot.couleurCollier }})
+								{% endif %}
+								— Quantité :
+								{{ ligne.quantite }}
+							</li>
+						{% endfor %}
+					</ul>
 
-                <form method="post"
-                      action="{{ path('app_commande_delete', {'id': commande.id}) }}"
-                      onsubmit="return confirm('Supprimer cette commande ?');">
+					<form method="post" action="{{ path('app_commande_delete', {'id': commande.id}) }}" onsubmit="return confirm('Supprimer cette commande ?');">
 
-                    <input type="hidden"
-                           name="_token"
-                           value="{{ csrf_token('delete' ~ commande.id) }}">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commande.id) }}">
 
-                    <button class="btn btn-danger btn-sm">
-                        Supprimer
-                    </button>
-                </form>
+						<button class="btn btn-danger btn-sm">
+							Supprimer
+						</button>
+					</form>
 
-            {% endfor %}
-        {% endif %}
-    {% endfor %}
+				{% endfor %}
+			{% endif %}
+		{% endfor %}
 
-{% else %}
+	{% else %}
 
-    <h1>Mes commandes</h1>
+		<h1>Mes commandes</h1>
 
-    {% for commande in commandes %}
+		{% for commande in commandes %}
 
-        <p>
-            Commande #{{ commande.id }} -
-            {{ commande.dateCommande|date('d/m/Y') }} -
-            {{ commande.total }} €
-        </p>
+			<p>
+				Commande #{{ commande.id }}
+				-
+				{{ commande.dateCommande|date('d/m/Y') }}
+				-
+				{{ commande.total }}
+				€
+			</p>
 
-        <ul>
-            {% for ligne in commande.ligneCommandes %}
-                <li>
-                    {% if ligne.articles %}
-                        {{ ligne.articles.nomProduit }}
-                    {% elseif ligne.chiot %}
-                        Chiot - {{ ligne.chiot.sexe }}
-                        (Collier {{ ligne.chiot.couleurCollier }})
-                    {% endif %}
-                    — Quantité : {{ ligne.quantite }}
-                </li>
-            {% endfor %}
-        </ul>
+			<ul>
+				{% for ligne in commande.ligneCommandes %}
+					<li>
+						{% if ligne.articles %}
+							{{ ligne.articles.nomProduit }}
+						{% elseif ligne.chiot %}
+							Chiot -
+							{{ ligne.chiot.sexe }}
+							(Collier
+							{{ ligne.chiot.couleurCollier }})
+						{% endif %}
+						— Quantité :
+						{{ ligne.quantite }}
+					</li>
+				{% endfor %}
+			</ul>
 
-    {% else %}
-        <p>Aucune commande trouvée.</p>
-    {% endfor %}
+		{% else %}
+			<p>Aucune commande trouvée.</p>
+		{% endfor %}
 
-{% endif %}
+	{% endif %}
 
 {% endblock %}
