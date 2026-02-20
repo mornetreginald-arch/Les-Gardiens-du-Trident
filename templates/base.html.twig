@@ -3,28 +3,36 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Les Gardiens du Trident{% endblock %}
-		</title>
-		<link rel="icon" href="{{ asset('images/Logo.png') }}"> 
-
-		
-
-		{% block javascripts %}
-			{% block importmap %}
-				{{ importmap('app') }}
+			{% block title %}Les Gardiens du Trident
 			{% endblock %}
-		{% endblock %}
+		</title>
+		<link rel="icon" href="{{ asset('images/Logo.png') }}">
+
+		<body class="{% block body_class %}{% endblock %}">
+
+			{% block javascripts %}
+				{% block importmap %}
+					{{ importmap('app') }}
+				{% endblock %}
+			{% endblock %}
+		</body>
 	</head>
 	<body>
 		<header>
 			<nav>
 				<ul>
+					<a href="{{ path('app_home') }}">Accueil</a>
+					<a href="{{ path('app_elevage') }}">Notre Élevage</a>
+					<a href="{{ path('app_geant') }}">Nos Géants</a>
+					<a href="{{ path('app_quotidient') }}">Le Quotidient</a>
+					<a href="{{ path('app_contact') }}">Contact</a>
+					<a href="{{ path('app_chiots') }}">Disponibilité des Chiots</a>
 					{% if is_granted('ROLE_ADMIN') %}
 						<div class="admin-tools" style="border: 1px solid red; padding: 10px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
 							<strong>Panneau Admin :</strong>
 							<a href="{{ path('app_articles_new') }}">Ajouter un Article</a>
 							<a href="{{ path('app_chiots_new') }}">Ajouter un Chiot</a>
-                            <a href="{{ path('app_categorie_new') }}">Ajouter une Categorie</a>
+							<a href="{{ path('app_categorie_new') }}">Ajouter une Categorie</a>
 							<a href="{{ path('app_commande_index') }}">Modifier/Supprimer une commande</a>
 						</div>
 					{% endif %}
@@ -42,13 +50,13 @@
 							<a href="{{ path('app_logout') }}">Se deconnecter</a>
 						</li>
 
-					{% else %}
-						<li>
-							<a href="{{ path('app_login') }}">Se connecter</a>
-						</li>
-						<li>
-							<a href="{{ path('app_register') }}">S'inscrire</a>
-						</li>
+						{# {% else %}
+																																										<li>
+																																											<a href="{{ path('app_login') }}">Se connecter</a>
+																																										</li>
+																																										<li>
+																																											<a href="{{ path('app_register') }}">S'inscrire</a>
+																																										</li> #}
 					{% endif %}
 				</ul>
 			</nav>
@@ -56,5 +64,44 @@
 
 
 		{% block body %}{% endblock %}
+		<footer class="site_footer">
+
+			<div class="footer-title">
+				<h2>LES GARDIENS DU TRIDENT</h2>
+			</div>
+
+			<div class="footer-content">
+
+				<div class="footer-column">
+					<h4>NAVIGATION</h4>
+					<ul>
+						<li><a href="{{path('app_elevage')}}">Notre Élevage</a></li>
+						<li><a href="{{path('app_geant')}}">Nos Géants</a></li>
+						<li><a href="{{path('app_quotidient')}}">Le Quotidient</a></li>
+						<li><a href="{{path('app_contact')}}">Contact</a></li>
+					</ul>
+				</div>
+
+				<div class="footer-column">
+					<h4>INFORMATIONS</h4>
+					<ul>
+						<li>Conditions Générales</li>
+						<li>Politique de Confidentialité</li>
+					</ul>
+				</div>
+
+				<div class="footer-column">
+					<h4>RESAUX SOCIAUX</h4>
+					<div class="social-icons">
+						<img src="{{ asset('images/logo-instagram.svg') }}" alt="Instagram" width="30">
+						<img src="{{ asset('images/logo-whatsapp.svg') }}" alt="Whatsapp" width="30">
+					</div>
+				</div>
+			</div>
+
+			<div class="footer-logo">
+				<img src="{{ asset('images/Logo.png') }}" alt="logo">
+			</div>
+		</footer>
 	</body>
 </html>

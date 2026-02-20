@@ -1,3 +1,10 @@
+.image-section {
+    text-align: center;
+}
+
+
+/* INSCRIPTION/CONNEXION */
+
 .auth-page {
     background: #f3f4f6;
     min-height: 100vh;
@@ -133,7 +140,54 @@ label {
     z-index: 2;
 }
 
+
+/* FOOTER */
+
+.site-footer {
+    background-color: #1B4332;
+    padding: 60px 20px;
+}
+
+.footer-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.footer-column h4 {
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column li {
+    margin-bottom: 8px;
+    color: black;
+}
+
+.footer-logo {
+    text-align: center;
+
+    margin-top: 40px;
+}
+
+.footer-logo img {
+    width: 150px;
+}  
+
 @media (max-width: 768px) {
+
+    
 
     .auth-container {
         padding: 25px;
@@ -146,6 +200,12 @@ label {
 
     .auth-tabs button {
         font-size: 14px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
     }
 
 }
