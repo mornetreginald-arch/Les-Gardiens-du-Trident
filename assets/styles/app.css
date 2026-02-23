@@ -43,6 +43,15 @@ NAVIGATION
     font-weight: 500;
 }
 
+.nav-btn {
+    background-color: #C19A6B;
+    color: #1B4332 !important;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-weight: 600;
+    
+}
+
 /* =========================
 HERO SECTION ÉLEVAGE
 ========================= */
@@ -55,9 +64,9 @@ HERO SECTION ÉLEVAGE
     background-repeat: no-repeat;
 }
 
-/* .hero h1 {
-    text-align: center;
-} */
+.text-hero {
+    padding-top: 60px;
+}
 
 .text-hero,
 .hero h1 {
@@ -66,6 +75,10 @@ HERO SECTION ÉLEVAGE
 
 .hero h1 {
     padding-top: 100px;
+}
+
+.text-hero p {
+    margin-bottom: 20px;
 }
 
 .elevage-text h3 {
@@ -93,14 +106,28 @@ IMAGE SECTION ÉLEVAGE
     margin: 0 auto;
 }
 
-.img-main {
-    text-align: center;
-}
-
 .img-main img {
     width: 95%;
     max-width: 600px;
+    display: block;
+    margin: 0 auto;
 }
+
+/* =========================
+SECTION GÉANTS
+========================= */
+
+.hero-geant {
+    height: 200vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.hero-geant h1 {
+    color: #C19A6B;
+}
+
 
 /* =========================
 AUTH PAGE
@@ -207,7 +234,7 @@ FOOTER
 }
 
 .footer-column a {
-    color: #C19A6B;
+    color: black;
     text-decoration: none;
 }
 
@@ -231,12 +258,26 @@ TABLET (768px+)
 @media (min-width: 768px) {
 
     .nav-list {
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-around;
     }
 
     .hero {
-        height: 120vh;
+        height: 130vh;
+    }
+
+    .hero h1 {
+            padding-top: 60px;
+    }
+
+    .text-hero {
+        padding-top: 60px;
+    }
+
+    .elevage-text p {
+        width: 60%;
+        display: block;
+        margin: 0 auto;
     }
 
     .image-section img {
@@ -265,6 +306,11 @@ LAPTOP (1024px+)
 
 @media (min-width: 1024px) {
 
+    .nav-list {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
     .text-hero {
         display: block;
         margin: 0 auto;
@@ -285,8 +331,14 @@ LAPTOP (1024px+)
         margin: 0 auto;
     }
 
+    .elevage-text-end {
+        width: 60%;
+        display: block;
+        margin: 0 auto;
+    }
+
     .hero {
-        height: 180vh;
+        height: 130vh;
     }
 
     .image-section img {

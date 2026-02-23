@@ -22,21 +22,12 @@
 	<body>
 		<header>
 			<nav class="nav_container">
-
-
 				<div class="nav-links">
-
-					
-
 					<ul class="nav-list">
+						<a href="{{ path('app_home') }}" class="navbar-brand">
+							<img src="{{ asset('images/logo.png') }}" alt="Logo Mon Élevage" width="150" height="auto">
+						</a>
 
-					<a href="{{ path('app_home') }}" class="navbar-brand">
-						<img src="{{ asset('images/logo.png') }}" alt="Logo Mon Élevage" width="150" height="auto">
-					</a>
-
-						{# <li>
-							<a href="{{ path('app_home') }}">ACCUEIL</a>
-						</li> #}
 						<li>
 							<a href="{{ path('app_elevage') }}">NOTRE ÉLEVAGE</a>
 						</li>
@@ -44,13 +35,13 @@
 							<a href="{{ path('app_geant') }}">NOS GÉANTS</a>
 						</li>
 						<li>
-							<a href="{{ path('app_quotidient') }}">LE QUOTIDIENT</a>
+							<a href="{{ path('app_quotidient') }}">LE QUOTIDIEN</a>
 						</li>
 						<li>
 							<a href="{{ path('app_contact') }}">CONTACT</a>
 						</li>
 						<li>
-							<a href="{{ path('app_chiots') }}">DISPONIBILITÉ DES CHIOTS</a>
+							<a href="{{ path('app_chiots') }}" class="nav-btn">DISPONIBILITÉ DES CHIOTS</a>
 						</li>
 					</ul>
 				</div>
@@ -122,8 +113,8 @@
 
 			<div class="footer-logo">
 				<a href="{{ path('app_home') }}" class="navbar-brand">
-						<img src="{{ asset('images/logo.png') }}" alt="Logo Mon Élevage" width="150" height="auto">
-					</a>
+					<img src="{{ asset('images/logo.png') }}" alt="Logo Mon Élevage" width="150" height="auto">
+				</a>
 			</div>
 		</footer>
 	</body>
