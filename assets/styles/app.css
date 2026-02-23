@@ -1,4 +1,6 @@
-/* RESET CSS */
+/* =========================
+RESET CSS
+========================= */
 
 * {
     margin: 0;
@@ -6,39 +8,103 @@
     box-sizing: border-box;
 }
 
-/* NAV BAR */
+body {
+    font-family: 'Lora', serif;
+    line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 600;
+}
+
+/* =========================
+NAVIGATION
+========================= */
 
 .nav_container {
-background-color: #1B4332;
+    background-color: #1B4332;
 }
 
 .nav-list {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    /* MOBILE */
+    align-items: center;
+    gap: 15px;
+    padding: 20px 0;
 }
 
 .nav-list a {
     color: #C19A6B;
     text-decoration: none;
+    font-weight: 500;
 }
 
-/* IMAGE HERO */
+/* =========================
+HERO SECTION ÉLEVAGE
+========================= */
 
-/* .image-section {
+.hero {
+    height: 200vh;
+    /* MOBILE */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* .hero h1 {
     text-align: center;
 } */
 
-.image-section img {
-width: 80%;
-display: block;
-margin: 0 auto;
-
+.text-hero,
+.hero h1 {
+    text-align: center;
 }
 
+.hero h1 {
+    padding-top: 100px;
+}
 
-/* INSCRIPTION/CONNEXION */
+.elevage-text h3 {
+    color: #C19A6B;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.elevage-text,
+.elevage-text-end {
+    text-align: center;
+}
+
+.elevage-text-end {
+    padding-top: 80px;
+}
+
+/* =========================
+IMAGE SECTION ÉLEVAGE
+========================= */
+
+.image-section img {
+    width: 95%;
+    display: block;
+    margin: 0 auto;
+}
+
+.img-main {
+    text-align: center;
+}
+
+.img-main img {
+    width: 95%;
+    max-width: 600px;
+}
+
+/* =========================
+AUTH PAGE
+========================= */
 
 .auth-page {
     background: #f3f4f6;
@@ -51,11 +117,11 @@ margin: 0 auto;
 
 .auth-container {
     width: 100%;
-    max-width: 700px;
+    max-width: 500px;
     background: white;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
 .auth-container h1 {
@@ -69,48 +135,15 @@ margin: 0 auto;
     margin-bottom: 25px;
 }
 
-.auth-tabs {
-    position: relative;
-    display: flex;
-    background: #e5e5e5;
-    border-radius: 30px;
-    margin-bottom: 30px;
-    overflow: hidden;
-}
-
-.auth-tabs .tab {
-    flex: 1;
-    text-align: center;
-    padding: 10px;
-    text-decoration: none;
-    color: #000;
-    z-index: 2;
-}
-
-.auth-tabs .tab.active {
-    font-weight: bold;
-}
-
-.auth-tabs .slider {
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    background: #fff;
-    border-radius: 30px;
-    transition: 0.3s;
-}
-
-.auth-tabs .slider.right {
-    transform: translateX(100%);
-}
-
 .grid-2 {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    /* MOBILE */
     gap: 20px;
 }
 
-input, select {
+input,
+select {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
@@ -118,10 +151,6 @@ input, select {
     border: 1px solid #ddd;
     background: #f9f9f9;
     font-size: 14px;
-}
-
-label {
-    font-weight: 500;
 }
 
 .auth-btn {
@@ -140,43 +169,9 @@ label {
     opacity: 0.9;
 }
 
-.form {
-    display: none;
-}
-
-.form.active {
-    display: block;
-}
-
-
-.auth-tabs {
-    position: relative;
-    display: flex;
-}
-
-.slider {
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    background: white;
-    border-radius: 30px;
-    transition: 0.3s;
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
-
-.auth-tabs button {
-    flex: 1;
-    background: none;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    z-index: 2;
-}
-
-
-/* FOOTER */
+/* =========================
+FOOTER
+========================= */
 
 .site_footer {
     background-color: #1B4332;
@@ -191,8 +186,10 @@ label {
 
 .footer-content {
     display: flex;
-    justify-content: space-around;
-    margin: auto;
+    flex-direction: column;
+    /* MOBILE */
+    gap: 30px;
+    text-align: center;
 }
 
 .footer-column h4 {
@@ -203,18 +200,19 @@ label {
 
 .footer-column ul {
     list-style: none;
-    padding: 0;
 }
 
 .footer-column li {
     margin-bottom: 8px;
-    text-decoration: none;
-    /* color: black; */
 }
 
 .footer-column a {
-    color: black;
+    color: #C19A6B;
     text-decoration: none;
+}
+
+.footer-column a:hover {
+    opacity: 0.7;
 }
 
 .footer-logo {
@@ -224,29 +222,78 @@ label {
 
 .footer-logo img {
     width: 150px;
-}  
+}
 
-@media (max-width: 768px) {
+/* =========================
+TABLET (768px+)
+========================= */
 
-    
+@media (min-width: 768px) {
 
-    .auth-container {
-        padding: 25px;
-        border-radius: 15px;
+    .nav-list {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .hero {
+        height: 120vh;
+    }
+
+    .image-section img {
+        width: 85%;
     }
 
     .grid-2 {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
     }
 
-    .auth-tabs button {
-        font-size: 14px;
+    .auth-container {
+        max-width: 700px;
+        padding: 40px;
     }
 
     .footer-content {
-        flex-direction: column;
-        gap: 30px;
-        text-align: center;
+        flex-direction: row;
+        justify-content: space-around;
+        text-align: left;
+    }
+}
+
+/* =========================
+LAPTOP (1024px+)
+========================= */
+
+@media (min-width: 1024px) {
+
+    .text-hero {
+        display: block;
+        margin: 0 auto;
+        width: 50%;
+        padding-top: 60px;
     }
 
+    .elevage-container {
+        display: flex;
+        text-align: center;
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+
+    .elevage-text p{
+        width: 60%;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .hero {
+        height: 180vh;
+    }
+
+    .image-section img {
+        width: 70%;
+    }
+
+    .auth-container {
+        max-width: 900px;
+    }
 }
