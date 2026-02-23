@@ -1,5 +1,40 @@
-.image-section {
+/* RESET CSS */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* NAV BAR */
+
+.nav_container {
+background-color: #1B4332;
+}
+
+.nav-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    list-style: none;
+}
+
+.nav-list a {
+    color: #C19A6B;
+    text-decoration: none;
+}
+
+/* IMAGE HERO */
+
+/* .image-section {
     text-align: center;
+} */
+
+.image-section img {
+width: 80%;
+display: block;
+margin: 0 auto;
+
 }
 
 
@@ -143,24 +178,25 @@ label {
 
 /* FOOTER */
 
-.site-footer {
+.site_footer {
     background-color: #1B4332;
     padding: 60px 20px;
 }
 
 .footer-title {
+    color: #C19A6B;
     text-align: center;
     margin-bottom: 40px;
 }
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
-    max-width: 1100px;
+    justify-content: space-around;
     margin: auto;
 }
 
 .footer-column h4 {
+    color: #C19A6B;
     margin-bottom: 15px;
     font-size: 14px;
 }
@@ -172,12 +208,17 @@ label {
 
 .footer-column li {
     margin-bottom: 8px;
+    text-decoration: none;
+    /* color: black; */
+}
+
+.footer-column a {
     color: black;
+    text-decoration: none;
 }
 
 .footer-logo {
     text-align: center;
-
     margin-top: 40px;
 }
 

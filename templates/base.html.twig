@@ -19,51 +19,70 @@
 	</head>
 	<body>
 		<header>
-			<nav>
-				<ul>
-					<a href="{{ path('app_home') }}">Accueil</a>
-					<a href="{{ path('app_elevage') }}">Notre Élevage</a>
-					<a href="{{ path('app_geant') }}">Nos Géants</a>
-					<a href="{{ path('app_quotidient') }}">Le Quotidient</a>
-					<a href="{{ path('app_contact') }}">Contact</a>
-					<a href="{{ path('app_chiots') }}">Disponibilité des Chiots</a>
-					{% if is_granted('ROLE_ADMIN') %}
-						<div class="admin-tools" style="border: 1px solid red; padding: 10px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-							<strong>Panneau Admin :</strong>
-							<a href="{{ path('app_articles_new') }}">Ajouter un Article</a>
-							<a href="{{ path('app_chiots_new') }}">Ajouter un Chiot</a>
-							<a href="{{ path('app_categorie_new') }}">Ajouter une Categorie</a>
-							<a href="{{ path('app_commande_index') }}">Modifier/Supprimer une commande</a>
-						</div>
-					{% endif %}
-					{% if app.user %}
-						<li>
-							<a href="{{ path('app_articles_index') }}">Articles</a>
-						</li>
-						<li>
-							<a href="{{ path('app_panier') }}">Panier</a>
-						</li>
-						<li>
-							<a href="{{ path('app_user') }}">Mon profil</a>
-						</li>
-						<li>
-							<a href="{{ path('app_logout') }}">Se deconnecter</a>
-						</li>
+			<nav class="nav_container">
 
-						{# {% else %}
-																																										<li>
-																																											<a href="{{ path('app_login') }}">Se connecter</a>
-																																										</li>
-																																										<li>
-																																											<a href="{{ path('app_register') }}">S'inscrire</a>
-																																										</li> #}
+
+				<div class="nav-links">
+
+					
+
+					<ul class="nav-list">
+
+					<a href="{{ path('app_home') }}" class="navbar-brand">
+						<img src="{{ asset('images/logo.png') }}" alt="Logo Mon Élevage" width="150" height="auto">
+					</a>
+
+						{# <li>
+							<a href="{{ path('app_home') }}">ACCUEIL</a>
+						</li> #}
+						<li>
+							<a href="{{ path('app_elevage') }}">NOTRE ÉLEVAGE</a>
+						</li>
+						<li>
+							<a href="{{ path('app_geant') }}">NOS GÉANTS</a>
+						</li>
+						<li>
+							<a href="{{ path('app_quotidient') }}">LE QUOTIDIENT</a>
+						</li>
+						<li>
+							<a href="{{ path('app_contact') }}">CONTACT</a>
+						</li>
+						<li>
+							<a href="{{ path('app_chiots') }}">DISPONIBILITÉ DES CHIOTS</a>
+						</li>
+					</ul>
+				</div>
+
+
+				<!-- Navigation utilisateur -->
+				<div class="nav-user">
+					{% if app.user %}
+						<a href="{{ path('app_articles_index') }}">Articles</a>
+						<a href="{{ path('app_panier') }}">Panier</a>
+						<a href="{{ path('app_user') }}">Mon profil</a>
+						<a href="{{ path('app_logout') }}">Se déconnecter</a>
+						{% else %}
+						{# <a href="{{ path('app_login') }}">Connexion</a> #}
 					{% endif %}
-				</ul>
+				</div>
+
+
+				<!-- Admin -->
+				{% if is_granted('ROLE_ADMIN') %}
+					<div class="nav-admin">
+						<span>Panneau Admin :</span>
+						<a href="{{ path('app_articles_new') }}">Ajouter un Article</a>
+						<a href="{{ path('app_chiots_new') }}">Ajouter un Chiot</a>
+						<a href="{{ path('app_categorie_new') }}">Ajouter une Catégorie</a>
+						<a href="{{ path('app_commande_index') }}">Commandes</a>
+					</div>
+				{% endif %}
 			</nav>
 		</header>
 
 
 		{% block body %}{% endblock %}
+
 		<footer class="site_footer">
 
 			<div class="footer-title">
@@ -100,7 +119,9 @@
 			</div>
 
 			<div class="footer-logo">
-				<img src="{{ asset('images/Logo.png') }}" alt="logo">
+				<a href="{{ path('app_home') }}" class="navbar-brand">
+						<img src="{{ asset('images/logo.png') }}" alt="Logo Mon Élevage" width="150" height="auto">
+					</a>
 			</div>
 		</footer>
 	</body>
