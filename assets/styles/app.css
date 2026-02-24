@@ -172,22 +172,15 @@ SECTION QUOTIDIEN
 }
 
 .quotidien-main {
-    padding-top: 120px;
+    padding-top: 100px;
     text-align: center;
 }
 
 .quotidien-container {
     text-align: center;
-    /* display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    flex-wrap: wrap; */
 }
 
 .quotidien-text {
-    
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -198,10 +191,11 @@ SECTION QUOTIDIEN
 
 .quotidien-text h3 {
     color: #C19A6B;
+    padding-bottom: 20px;
 }
 
 .quotidien-text p {
-    width: 50%;
+    width: 80%;
     color: #0b0b2b;
     margin-bottom: 20px; /* espace entre les paragraphes */
 }
@@ -393,7 +387,7 @@ NAV
     }
 
 /* =========================
-ÉLEVAGE
+SECTION ÉLEVAGE
 ========================= */
 
     .text-hero {
@@ -431,7 +425,7 @@ NAV
     }
 
     /* =========================
-GÉANT
+SECTION GÉANT
 ========================= */
 
 .hero-geant {
@@ -479,6 +473,16 @@ GÉANT
         transform: translateY(0);
     }
 } */
+
+/* =========================
+SECTION QUOTIDIEN
+========================= */
+
+.quotidien-text {
+    /* flex-direction: row;
+    justify-content: center; */
+}
+
 
 /* =========================
 AUTHENTIFICATION
