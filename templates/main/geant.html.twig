@@ -1,16 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Géants{% endblock %}
+{% block title %}Géants
+{% endblock %}
 
 {% block body %}
 
-<section class="hero-geant" style="background-image: url('{{ asset('images/geant.png') }}')">
+	<section class="hero-geant" style="background-image: url('{{ asset('images/geant.png') }}')">
 
-<h1>NOS GÉANTS - L'HÉRITAGE DU TRIDENT</h1>
+		<h1>NOS GÉANTS - L'HÉRITAGE DU TRIDENT</h1>
 
+		<div class="geant-container">
 
+			<div class="geant-card">
+				<img src="{{ asset('images/timber.webp') }}" alt="Chien">
+				<p>Timber des sources du val d'usiers</p>
+                <a href="https://www.chiens-de-france.com/chien/1411325/archive" target="_blank" class="geant-btn">PEDIGREE</a>
+			</div>
 
-</section>
+			<div class="geant-card">
+				<img src="{{ asset('images/unaia.webp') }}" alt="Chien">
+				<p>Unaïa des lions de la ferronnière</p>
+                <a href="https://www.chiens-de-france.com/chien/1427937/pedigree" target="_blank" class="geant-btn">PEDIGREE</a>
+			</div>
+		</div>
+	</section>
 
 
 {% endblock %}

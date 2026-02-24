@@ -43,13 +43,14 @@ NAVIGATION
     font-weight: 500;
 }
 
-.nav-btn {
+.nav-btn,
+.geant-btn {
     background-color: #C19A6B;
     color: #1B4332 !important;
     padding: 8px 18px;
     border-radius: 30px;
     font-weight: 600;
-    
+    text-decoration: none;
 }
 
 /* =========================
@@ -57,7 +58,7 @@ HERO SECTION ÉLEVAGE
 ========================= */
 
 .hero {
-    height: 200vh;
+    height: 300vh;
     /* MOBILE */
     background-size: cover;
     background-position: center;
@@ -118,7 +119,7 @@ SECTION GÉANTS
 ========================= */
 
 .hero-geant {
-    height: 200vh;
+    height: 180vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -126,7 +127,34 @@ SECTION GÉANTS
 
 .hero-geant h1 {
     color: #C19A6B;
+    padding-top: 120px;
+    text-align: center;
 }
+
+.geant-card {
+    border: 3px solid #1B4332;
+    border-radius: 20px;
+    padding: 15px;
+    margin: 50px auto;
+    width: 90%;
+    max-width: 350px;
+    text-align: center;
+}
+
+.geant-card img {
+    width: 100%;
+    height: 275px;
+    /* IMPORTANT */
+    border-radius: 15px;
+    display: block;
+    border: 3px solid #1B4332;
+}
+
+.geant-card p {
+    margin-bottom: 60px;
+    margin-top: 30px;
+}
+
 
 
 /* =========================
@@ -267,7 +295,7 @@ TABLET (768px+)
     }
 
     .hero h1 {
-            padding-top: 60px;
+        padding-top: 60px;
     }
 
     .text-hero {
@@ -306,10 +334,18 @@ LAPTOP (1024px+)
 
 @media (min-width: 1024px) {
 
+/* =========================
+NAV
+========================= */
+
     .nav-list {
         flex-direction: row;
         justify-content: space-around;
     }
+
+/* =========================
+ÉLEVAGE
+========================= */
 
     .text-hero {
         display: block;
@@ -325,7 +361,7 @@ LAPTOP (1024px+)
         padding-bottom: 80px;
     }
 
-    .elevage-text p{
+    .elevage-text p {
         width: 60%;
         display: block;
         margin: 0 auto;
@@ -344,6 +380,45 @@ LAPTOP (1024px+)
     .image-section img {
         width: 70%;
     }
+
+    /* =========================
+GÉANT
+========================= */
+
+.hero-geant {
+    min-height: 100vh; /* prend toute la hauteur écran */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* Titre en haut */
+.hero-geant h1 {
+    color: #C19A6B;
+    text-align: center;
+    padding-top: 40px;
+}
+
+/* Container des cartes */
+.geant-container {
+    flex: 1; /* 👈 prend tout l’espace restant */
+    display: flex;
+    justify-content: center;  /* centre horizontalement */
+    align-items: center;      /* centre verticalement */
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+/* .geant-card {
+    text-align: center;
+} */
+
+/* =========================
+AUTHENTIFICATION
+========================= */
 
     .auth-container {
         max-width: 900px;
