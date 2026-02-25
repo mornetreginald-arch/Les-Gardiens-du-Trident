@@ -11,6 +11,8 @@ RESET CSS
 body {
     font-family: 'Lora', serif;
     line-height: 1.6;
+    display: flex;
+    flex-direction: column;
 }
 
 h1,
@@ -18,6 +20,7 @@ h2,
 h3 {
     font-weight: 600;
 }
+
 
 /* =========================
 NAVIGATION
@@ -178,7 +181,8 @@ SECTION QUOTIDIEN
 /* CONTENEUR GLOBAL */
 .quotidien-container {
     display: flex;
-    flex-direction: column; /* MOBILE */
+    flex-direction: column;
+    /* MOBILE */
     align-items: center;
     gap: 40px;
 }
@@ -206,22 +210,24 @@ SECTION CONTACT
 ========================= */
 
 .contact-hero {
-    height: 180vh;
+    min-height: 100vh;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .contact-container {
-    text-align: center;
     background: #f8f9fb;
-    padding: 40px;
+    padding: 30px;
     border-radius: 12px;
     width: 100%;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    max-width: 500px;
+    margin: 40px auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-input, textarea {
+input,
+textarea {
     width: 100%;
     padding: 14px;
     border-radius: 8px;
@@ -230,17 +236,34 @@ input, textarea {
     font-size: 14px;
 }
 
-.subtitle, .contact-container h3 {
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: #050518;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.subtitle,
+.contact-container h3 {
     text-align: center;
 }
 
 
-.title-hero, .address {
+.title-hero {
     color: #1B4332;
     text-align: center;
     padding-top: 100px;
 }
 
+.address {
+    color: #1B4332;
+    text-align: center;
+    padding-bottom: 200px;
+}
 
 /* =========================
 AUTH PAGE
@@ -253,6 +276,7 @@ AUTH PAGE
     justify-content: center;
     align-items: center;
     padding: 20px;
+    width: 100%;
 }
 
 .auth-container {
@@ -316,6 +340,7 @@ FOOTER
 .site_footer {
     background-color: #1B4332;
     padding: 60px 20px;
+    /* margin-top: auto; */
 }
 
 .footer-title {
@@ -397,8 +422,13 @@ TABLET (768px+)
         width: 85%;
     }
 
-    .hero-quotidien{
+    .hero-quotidien {
         height: 130vh;
+    }
+
+    .title-hero p {
+        padding-left: 50px;
+        padding-right: 50px;
     }
 
     .grid-2 {
@@ -423,7 +453,7 @@ LAPTOP (1024px+)
 
 @media (min-width: 1024px) {
 
-/* =========================
+    /* =========================
 NAV
 ========================= */
 
@@ -432,7 +462,7 @@ NAV
         justify-content: space-around;
     }
 
-/* =========================
+    /* =========================
 SECTION ÉLEVAGE
 ========================= */
 
@@ -474,74 +504,95 @@ SECTION ÉLEVAGE
 SECTION GÉANT
 ========================= */
 
-.hero-geant {
-    height: 193vh; /* prend toute la hauteur écran */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    .hero-geant {
+        height: 193vh;
+        /* prend toute la hauteur écran */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
 
-    display: flex;
-    flex-direction: column;
-}
+        display: flex;
+        flex-direction: column;
+    }
 
-/* Titre en haut */
-.hero-geant h1 {
-    color: #C19A6B;
-    text-align: center;
-    padding-top: 200px;
-}
+    /* Titre en haut */
+    .hero-geant h1 {
+        color: #C19A6B;
+        text-align: center;
+        padding-top: 200px;
+    }
 
-/* Container des cartes */
-.geant-container {
-    flex: 1; /* 👈 prend tout l’espace restant */
-    display: flex;
-    justify-content: center;  /* centre horizontalement */
-    align-items: center;      /* centre verticalement */
-    gap: 40px;
-    flex-wrap: wrap;
-}
+    /* Container des cartes */
+    .geant-container {
+        flex: 1;
+        /* 👈 prend tout l’espace restant */
+        display: flex;
+        justify-content: center;
+        /* centre horizontalement */
+        align-items: center;
+        /* centre verticalement */
+        gap: 40px;
+        flex-wrap: wrap;
+    }
 
-.geant-card p {
-    margin-top: 90px;
-}
+    .geant-card p {
+        margin-top: 90px;
+    }
 
-.geant-card {
-    height: 600px;
-    
-    /* opacity: 0;
+    .geant-card {
+        height: 600px;
+
+        /* opacity: 0;
     transform: translateY(30px);
     animation: fadeUp 0.8s ease forwards; */
-}
+    }
 
-/* @keyframes fadeUp {
+    /* @keyframes fadeUp {
     to {
         opacity: 1;
         transform: translateY(0);
     }
 } */
 
-/* =========================
+    /* =========================
 SECTION QUOTIDIEN
 ========================= */
 
-.hero-quotidien {
-    height: 130vh;
+    .hero-quotidien {
+        height: 130vh;
+    }
+
+    .quotidien-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 200px;
+    }
+
+    .quotidien-text {
+        width: 45%;
+    }
+
+    /* =========================
+SECTION CONTACT
+========================= */
+
+.contact-container {
+    max-width: 600px;
 }
 
-.quotidien-container {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 200px;
+.contact-hero {
+    min-height: 100vh;
 }
 
-.quotidien-text {
-    width: 45%;
+.title-hero p {
+    padding-left: 260px;
+    padding-right: 260px;
 }
 
 
 
-/* =========================
+    /* =========================
 AUTHENTIFICATION
 ========================= */
 
