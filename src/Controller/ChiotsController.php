@@ -7,6 +7,7 @@ use App\Form\ChiotsType;
 use App\Repository\ChiotsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -33,6 +34,19 @@ final class ChiotsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile instanceof UploadedFile) {
+
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                $imageFile->move(
+                    $this->getParameter('uploads_directory'),
+                    $newFilename
+                );
+
+                $chiot->setImage($newFilename);
+            }
             $entityManager->persist($chiot);
             $entityManager->flush();
 
@@ -75,7 +89,7 @@ final class ChiotsController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Chiots $chiot, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$chiot->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $chiot->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($chiot);
             $entityManager->flush();
         }

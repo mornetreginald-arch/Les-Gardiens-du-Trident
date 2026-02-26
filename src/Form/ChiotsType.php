@@ -8,6 +8,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 
 class ChiotsType extends AbstractType
 {
@@ -17,7 +19,23 @@ class ChiotsType extends AbstractType
             // ->add('id_chiot')
             ->add('sexe')
             ->add('couleur_collier')
-            ->add('prix');
+            ->add('prix')
+            ->add('image', FileType::class, [
+                'label' => 'Image',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File(
+                        maxSize: '2M',
+                        mimeTypes: [
+                            'image/jpeg',
+                            'image/png',
+                            'image/webp',
+                        ],
+                        mimeTypesMessage: 'Upload une image valide',
+                    )
+                ],
+            ]);
         //     ->add('commande', EntityType::class, [
         //         'class' => Commande::class,
         //         'choice_label' => 'id',

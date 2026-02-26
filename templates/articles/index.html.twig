@@ -4,103 +4,122 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Articles index</h1>
 
-	<table class="table">
-		<thead>
+
+<table class="table">
+	<thead>
+	<h1>Articles</h1>
+		<tr>
+			<th>Nom_produit</th>
+			<th>Prix</th>
+			<th>Image</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+
+	<tbody>
+
+		{# ================= ARTICLES ================= #}
+		{% for article in articles %}
 			<tr>
-				<th>Nom_produit</th>
-				<th>Prix</th>
-				<th>Image</th>
-				<th>Action</th>
-			</tr>
-		</thead>
+				<td>{{ article.nomProduit }}</td>
+				<td>{{ article.prix }}€</td>
+				<td>
+					{% if article.image %}
+						<img src="{{ asset('uploads/' ~ article.image) }}" width="100">
+					{% else %}
+						<span class="text-muted">Pas d'image</span>
+					{% endif %}
+				</td>
 
-		<tbody>
+				<td>
 
-			{# ================= ARTICLES ================= #}
-			{% for article in articles %}
-				<tr>
-					<td>{{ article.nomProduit }}</td>
-					<td>{{ article.prix }}
-						€</td>
-					<td>{{ article.image }}</td>
-
-					<td>
-
-						{# 🔥 Affichage stock restant #}
-						{% if article.stock > 0 %}
-							{% if article.stock <= 3 %}
-								<small class="text-danger d-block">Plus que
-									{{ article.stock }}
-									en stock !</small>
-							{% else %}
-								<small class="text-muted d-block">Stock restant :
-									{{ article.stock }}</small>
-							{% endif %}
-						{% endif %}
-
-						{# 🔥 Gestion rupture comme chiot #}
-						{% if article.stock <= 0 %}
-							<span class="text-danger fw-bold">Rupture de stock</span>
+					{# 🔥 Affichage stock restant #}
+					{% if article.stock > 0 %}
+						{% if article.stock <= 3 %}
+							<small class="text-danger d-block">Plus que
+								{{ article.stock }}
+								en stock !</small>
 						{% else %}
-							{# <a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn btn-sm btn-success">Ajouter</a> #}
+							<small class="text-muted d-block">Stock restant :
+								{{ article.stock }}</small>
 						{% endif %}
+					{% endif %}
 
-						{% if is_granted('ROLE_ADMIN') %}
+					{# 🔥 Gestion rupture comme chiot #}
+					{% if article.stock <= 0 %}
+						<span class="text-danger fw-bold">Rupture de stock</span>
+						{% else %}
+						{# <a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn btn-sm btn-success">Ajouter</a> #}
+					{% endif %}
+
+					{% if is_granted('ROLE_ADMIN') %}
 						<div class="mt-1">
 							<a href="{{ path('app_articles_edit', {'id': article.id}) }}">Modifier</a>
 						</div>
-						{% endif %}
+					{% endif %}
 
-						{% if article.prix <= 0 %}
-							<span class="text-muted">Inclus avec réservation</span>
+					{% if article.prix <= 0 %}
+						<span class="text-muted">Inclus avec réservation</span>
 						{# {% elseif article.stock <= 0 %}
-							<span class="text-danger fw-bold">Rupture de stock</span> #}
-						{% else %}
-							<a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn btn-sm btn-success">
-								Ajouter
-							</a>
-						{% endif %}
+																																	<span class="text-danger fw-bold">Rupture de stock</span> #}
+					{% else %}
+						<a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn btn-sm btn-success">
+							Ajouter
+						</a>
+					{% endif %}
 
-					</td>
-				</tr>
+				</td>
+			</tr>
 
-			{% else %}
+		{% else %}
+			<tr>
+				<td colspan="4">Aucun article trouvé</td>
+			</tr>
+		{% endfor %}
+
+		{# ================= CHIOTS ================= #}
+		
+		<table class="table">
+			<thead>
+			<h2>Chiots</h2>
 				<tr>
-					<td colspan="4">Aucun article trouvé</td>
+					<th>Sexe</th>
+					<th>Prix</th>
+					<th>Collier</th>
+					<th>Image</th>
+					<th>Réservation</th>
 				</tr>
-			{% endfor %}
+			</thead>
+			<tbody>
+				{% for chiot in chiots %}
+					<tr>
+						<td>{{ chiot.sexe }}
+							(Chiot)</td>
+						<td>{{ chiot.prix }}
+							€</td>
+						<td>{{ chiot.couleurCollier }}</td>
 
-			{# ================= CHIOTS ================= #}
-			{% for chiot in chiots %}
-				<tr>
-					<td>{{ chiot.sexe }}
-						(Chiot)</td>
-					<td>{{ chiot.prix }}
-						€</td>
-					<td>Collier :
-						{{ chiot.couleurCollier }}</td>
+						<td>
+							{% if chiot.image %}
+								<img src="{{ asset('uploads/' ~ chiot.image) }}" width="100">
+							{% else %}
+								Pas d'image
+							{% endif %}
+						</td>
 
-					<td>
-						{% if chiot.estVendu %}
-							<span class="text-danger fw-bold">Déjà réservé</span>
-						{% else %}
-							<a href="{{ path('app_cart_add_chiot', {'id': chiot.id}) }}" class="btn btn-warning btn-sm">Réserver</a>
-						{% endif %}
-					</td>
-				</tr>
-
-			{% else %}
-				<tr>
-					<td colspan="4">Aucun chiot disponible</td>
-				</tr>
-			{% endfor %}
-
-		</tbody>
-	</table>
-	{% if is_granted('ROLE_ADMIN') %}
-	<a href="{{ path('app_articles_new') }}" class="btn btn-primary">Créer un nouvel article</a>
-	{% endif %}
-
+						<td>
+							{% if chiot.estVendu %}
+								<span class="text-danger fw-bold">Déjà réservé</span>
+							{% else %}
+								<a href="{{ path('app_cart_add_chiot', {'id': chiot.id}) }}" class="btn btn-warning btn-sm">
+									Réserver
+								</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</tbody>
 {% endblock %}

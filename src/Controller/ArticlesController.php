@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[Route('/articles')]
 final class ArticlesController extends AbstractController
@@ -39,6 +41,25 @@ final class ArticlesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile instanceof UploadedFile) {
+
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // erreur
+                }
+
+                $article->setImage($newFilename);
+            }
+
             $em->persist($article);
             $em->flush();
 
@@ -87,8 +108,9 @@ final class ArticlesController extends AbstractController
     =====================================================
     */
     #[Route('/article/ajouter-au-panier/{id}', name: 'app_cart_add')]
-    public function ajouterAuPanier(int $id,ArticlesRepository $articlesRepo,EntityManagerInterface $em): Response {
-        
+    public function ajouterAuPanier(int $id, ArticlesRepository $articlesRepo, EntityManagerInterface $em): Response
+    {
+
         $user = $this->getUser();
 
         if (!$user) {
@@ -103,7 +125,7 @@ final class ArticlesController extends AbstractController
             return $this->redirectToRoute('app_articles_index');
         }
 
-        
+
         if (!$article) {
             throw $this->createNotFoundException("Article introuvable.");
         }
@@ -142,7 +164,8 @@ final class ArticlesController extends AbstractController
     =====================================================
     */
     #[Route('/cart/add/chiot/{id}', name: 'app_cart_add_chiot')]
-    public function addChiot(Chiots $chiot,EntityManagerInterface $em,ArticlesRepository $articlesRepository): Response {
+    public function addChiot(Chiots $chiot, EntityManagerInterface $em, ArticlesRepository $articlesRepository): Response
+    {
         $user = $this->getUser();
 
         if (!$user) {
@@ -200,4 +223,10 @@ final class ArticlesController extends AbstractController
 
         return $this->redirectToRoute('app_panier');
     }
+
+    /*
+    =====================================================
+    AJOUT UPLOAD IMAGE ARTICLES
+    =====================================================
+    */
 }

@@ -10,8 +10,11 @@
 		<thead>
 			<tr>
 				<th>Sexe</th>
-				<th>Couleur_collier</th>
+				<th>Couleur collier</th>
+				<th>Image</th>
 				<th>Prix</th>
+				<th>Réservation</th>
+				<th>Action</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -19,7 +22,17 @@
 				<tr>
 					<td>{{ chiot.sexe }}</td>
 					<td>{{ chiot.couleurCollier }}</td>
-					<td>{{ chiot.prix }}</td>
+
+					<td>
+						{% if chiot.image %}
+							<img src="{{ asset('uploads/' ~ chiot.image) }}" width="100">
+						{% else %}
+							Pas d'image
+						{% endif %}
+					</td>
+
+					<td>{{ chiot.prix }}
+						€</td>
 
 					<td>
 						{% if not chiot.estVendu %}
@@ -38,8 +51,6 @@
 					</td>
 				</tr>
 			{% endfor %}
-
-
 		</tbody>
 	</table>
 
