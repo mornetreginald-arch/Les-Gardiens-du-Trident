@@ -1,90 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion
-{% endblock %}
-
-{% block body_class %}auth-page
-{% endblock %}
-
 {% block body %}
-
-	<div class="auth-container">
-
-		<h1>Bienvenue</h1>
-		<p class="subtitle">Connectez-vous ou créez un nouveau compte</p>
-
-		<!-- Onglets -->
-		<div class="auth-tabs">
-			<button id="loginTab" class="active">Connexion</button>
-			<button id="registerTab">Inscription</button>
-			<div class="slider"></div>
-		</div>
-
-		<!-- FORM LOGIN -->
-		<div id="loginForm" class="form active">
-			<form method="post" action="{{ path('app_login') }}">
-
-				{% if error %}
-					<div class="alert alert-danger">
-						{{ error.messageKey|trans(error.messageData, 'security') }}
-					</div>
-				{% endif %}
-
-				<input type="email" value="{{ last_username }}" name="_username" placeholder="Email" required>
-
-				<input type="password" name="_password" placeholder="Mot de passe" required>
-
-				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-				<button class="auth-btn">Se connecter</button>
-			</form>
-		</div>
-
-		<!-- FORM REGISTER -->
-		<div id="registerForm" class="form">
-			{{ form_start(registrationForm) }}
-			{{ form_row(registrationForm.nom) }}
-			{{ form_row(registrationForm.prenom) }}
-			{{ form_row(registrationForm.email) }}
-			{{ form_row(registrationForm.telephone) }}
-			{{ form_row(registrationForm.rue) }}
-			{{ form_row(registrationForm.code_postal) }}
-			{{ form_row(registrationForm.ville) }}
-			{{ form_row(registrationForm.pays) }}
-			{{ form_row(registrationForm.plainPassword) }}
-
-			<button class="auth-btn">S'inscrire</button>
-			{{ form_end(registrationForm) }}
-		</div>
-
-	</div>
-
-	<script>
-		const loginTab = document.getElementById('loginTab');
-const registerTab = document.getElementById('registerTab');
-const loginForm = document.getElementById('loginForm');
-const registerForm = document.getElementById('registerForm');
-const slider = document.querySelector('.slider');
-
-function showLogin() {
-loginTab.classList.add('active');
-registerTab.classList.remove('active');
-loginForm.classList.add('active');
-registerForm.classList.remove('active');
-slider.style.transform = 'translateX(0%)';
-}
-
-function showRegister() {
-registerTab.classList.add('active');
-loginTab.classList.remove('active');
-registerForm.classList.add('active');
-loginForm.classList.remove('active');
-slider.style.transform = 'translateX(100%)';
-}
-
-loginTab.addEventListener('click', showLogin);
-registerTab.addEventListener('click', showRegister);{% if registerError %}showRegister();
-{% else %}showLogin();{% endif %}
-	</script>
-
+    <script>
+        window.onload = function() {
+            var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            loginModal.show();
+        };
+    </script>
 {% endblock %}
