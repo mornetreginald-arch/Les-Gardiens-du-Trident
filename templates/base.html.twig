@@ -60,14 +60,32 @@
 
 				<!-- Navigation utilisateur -->
 				<div class="nav-user">
+
 					{% if app.user %}
 						<a href="{{ path('app_articles_index') }}">Articles</a>
-						<button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#panierModal">
-							Panier
-						</button>
-						<a href="{{ path('app_user') }}">Mon profil</a>
-						<a href="{{ path('app_logout') }}">Se déconnecter</a>
+						{% set totalArticles = 0 %}
 					{% endif %}
+
+					{% if panier is defined and panier %}
+						{% for ligne in panier.lignePaniers %}
+							{% set totalArticles = totalArticles + ligne.quantite %}
+						{% endfor %}
+					{% endif %}
+
+					<button class="btn btn-outline-light position-relative" data-bs-toggle="modal" data-bs-target="#panierModal">
+
+						Panier
+
+						{% if totalArticles > 0 %}
+							<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+								{{ totalArticles }}
+							</span>
+						{% endif %}
+					</button>
+
+					<a href="{{ path('app_user') }}">Mon profil</a>
+					<a href="{{ path('app_logout') }}">Se déconnecter</a>
+
 				</div>
 
 				<!-- Admin -->
@@ -99,10 +117,10 @@
 				<div class="footer-column">
 					<h4>NAVIGATION</h4>
 					<ul>
-						<li><ahref="{{path('app_elevage')}}">Notre Élevage</a></li>
-						<li><ahref="{{path('app_geant')}}">Nos Géants</a></li>
-						<li><ahref="{{path('app_quotidient')}}">Le Quotidien</a></li>
-						<li><ahref="{{path('app_contact')}}">Contact</a></li>
+						<li><ahref="{{path('app_elevage') }}">Notre Élevage</a></li>
+						<li><ahref="{{path('app_geant') }}">Nos Géants</a></li>
+						<li><ahref="{{path('app_quotidient') }}">Le Quotidien</a></li>
+						<li><ahref="{{path('app_contact') }}">Contact</a></li>
 					</ul>
 				</div>
 
@@ -260,28 +278,61 @@
 
 					<div class="modal-body">
 
-						{% set panier = app.session.get('panier', []) %}
+						{% if panier is defined and panier and panier.lignePaniers|length > 0 %}
 
-						{% if panier|length > 0 %}
+							{% set total = 0 %}
 
-							<ul class="list-group">
-								{% for id, quantity in panier %}
-									<li class="list-group-item d-flex justify-content-between">
-										<span>Article #{{ id }}</span>
-										<span>x
-											{{ quantity }}</span>
+							<ul class="list-group mb-3">
+								{% for ligne in panier.lignePaniers %}
+
+									{% if ligne.articles %}
+										{% set prix = ligne.articles.prix %}
+										{% set nom = ligne.articles.nomProduit %}
+									{% elseif ligne.chiot %}
+										{% set prix = ligne.chiot.prix %}
+										{% set nom = 'Chiot ' ~ ligne.chiot.sexe %}
+									{% endif %}
+
+									{% set total = total + (prix * ligne.quantite) %}
+
+									<li class="list-group-item d-flex justify-content-between align-items-center">
+
+										<div>
+											<strong>{{ nom }}</strong><br>
+											{{ prix }}
+											€ x
+											{{ ligne.quantite }}
+										</div>
+
+										<a href="{{ path('app_panier_remove', {id: ligne.id}) }}" class="btn btn-sm btn-danger">
+											✕
+										</a>
+
 									</li>
+
 								{% endfor %}
 							</ul>
+
+							<div class="text-end">
+								<h5>Total :
+									<strong>{{ total }}
+										€</strong>
+								</h5>
+							</div>
+
+							<div class="text-end mt-3">
+								<a href="{{ path('app_panier_valider') }}" class="btn btn-success">
+									Valider mon panier
+								</a>
+							</div>
 
 						{% else %}
 							<p class="text-center">Votre panier est vide.</p>
 						{% endif %}
-
 					</div>
-
 				</div>
-			</div>
-		</body>
+
+			</body>
+		</html>
 	</body>
 </html>

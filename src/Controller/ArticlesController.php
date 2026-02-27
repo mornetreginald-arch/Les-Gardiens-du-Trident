@@ -24,11 +24,21 @@ final class ArticlesController extends AbstractController
     #[Route(name: 'app_articles_index', methods: ['GET'])]
     public function index(
         ArticlesRepository $articlesRepository,
-        ChiotsRepository $chiotsRepository
+        ChiotsRepository $chiotsRepository,
+        EntityManagerInterface $em
     ): Response {
+
+        $panier = null;
+
+        if ($this->getUser()) {
+            $panier = $em->getRepository(Panier::class)
+                ->findOneBy(['user' => $this->getUser()]);
+        }
+
         return $this->render('articles/index.html.twig', [
             'articles' => $articlesRepository->findAll(),
             'chiots'   => $chiotsRepository->findAll(),
+            'panier'   => $panier,
         ]);
     }
 
@@ -145,12 +155,26 @@ final class ArticlesController extends AbstractController
             $em->persist($panier);
         }
 
-        $ligne = new LignePanier();
-        $ligne->setArticles($article);
-        $ligne->setQuantite(1);
-        $ligne->setPanier($panier);
+        $ligneExistante = $em->getRepository(LignePanier::class)
+            ->findOneBy([
+                'panier' => $panier,
+                'articles' => $article
+            ]);
 
-        $em->persist($ligne);
+        if ($ligneExistante) {
+
+            $ligneExistante->setQuantite(
+                $ligneExistante->getQuantite() + 1
+            );
+        } else {
+
+            $ligne = new LignePanier();
+            $ligne->setArticles($article);
+            $ligne->setQuantite(1);
+            $ligne->setPanier($panier);
+
+            $em->persist($ligne);
+        }
         $em->flush();
 
         $this->addFlash('success', 'Article ajouté au panier.');
@@ -221,12 +245,8 @@ final class ArticlesController extends AbstractController
 
         $this->addFlash('success', 'Chiot réservé avec article inclus.');
 
-        return $this->redirectToRoute('app_panier');
+        return $this->redirectToRoute('app_articles_index');
     }
 
-    /*
-    =====================================================
-    AJOUT UPLOAD IMAGE ARTICLES
-    =====================================================
-    */
+    
 }

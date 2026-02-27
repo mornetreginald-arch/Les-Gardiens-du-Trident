@@ -74,7 +74,7 @@ final class PanierController extends AbstractController
 
         $this->addFlash('success', 'Produit supprimé du panier.');
 
-        return $this->redirectToRoute('app_panier');
+        return $this->redirectToRoute('app_articles_index');
     }
 
     #[Route('/panier/valider', name: 'app_panier_valider')]
