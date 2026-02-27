@@ -16,7 +16,8 @@ body {
 }
 
 
-html, body {
+html,
+body {
     width: 100%;
 }
 
@@ -78,8 +79,11 @@ NAVIGATION
     margin-right: 10px;
 }
 
-.nav-user, .nav-admin {
-    
+.nav-user,
+.nav-admin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* =========================
@@ -292,6 +296,35 @@ textarea {
 }
 
 /* =========================
+SECTION ARTICLES
+========================= */
+
+.hero-articles {
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.chiots-responsive {
+    border: 3px solid #1B4332;
+    border-radius: 10%;
+    text-align: center;
+}
+
+.chiots-responsive img {
+    /* border: 3px solid #1B4332; */
+    border-radius: 20%;
+    height: 200px;
+    width: auto;
+}
+
+.btn-chiots a {
+    color: #C19A6B;
+}
+
+
+/* =========================
 AUTH PAGE
 ========================= */
 
@@ -486,7 +519,7 @@ NAV
     .nav-list {
         flex-direction: row;
         justify-content: space-around;
-        
+
     }
 
     /* =========================
