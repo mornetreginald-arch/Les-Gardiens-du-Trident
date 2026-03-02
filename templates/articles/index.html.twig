@@ -10,8 +10,8 @@
 		<div
 			class="chiots-responsive">
 			{# <table class="table"> #}
-			<thead>
-				<h2>Chiots</h2>
+			{# <thead> #}
+				{# <h2>Chiots</h2> #}
 				{# <tr>
 					<th>Sexe</th>
 					<th>Prix</th>
@@ -19,7 +19,7 @@
 					<th>Image</th>
 					<th>Réservation</th>
 				</tr> #}
-			</thead>
+			{# </thead> #}
 			<tbody>
 				{% for chiot in chiots %}
 					<tr>
@@ -28,7 +28,7 @@
 								<img src="{{ asset('uploads/' ~ chiot.image) }}" width="100">
 							{% else %}
 								Pas d'image
-							{% endif %}
+							{% endif %} <br>
 						</td>
 						<td>Chiot Collier : {{ chiot.couleurCollier }}</td> <br>
 						<td>Sexe : {{ chiot.sexe }}</td> <br>
@@ -42,11 +42,11 @@
 							{% else %}
 
 								{% if app.user %}
-									<a href="{{ path('app_cart_add_chiot', {'id': chiot.id}) }}" class="btn btn-warning btn-sm">
+									<a href="{{ path('app_cart_add_chiot', {'id': chiot.id}) }}" class="btn-warning">
 										Réserver
 									</a>
 								{% else %}
-									<button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">
+									<button type="button" class="btn-warning" data-bs-toggle="modal" data-bs-target="#loginModal">
 										Réserver ce chiot
 									</button>
 								{% endif %}
@@ -64,6 +64,7 @@
 
 		<div
 			class="articles-responsive">
+			<h2>Pour préparer son arrivée</h2>
 			{# <table class="table"> #}
 			{# <thead>
 				<h1>Articles</h1>
@@ -122,11 +123,11 @@
 							{% else %}
 
 								{% if app.user %}
-									<a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn btn-sm btn-success">
+									<a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn-success">
 										Ajouter
 									</a>
 								{% else %}
-									<button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#loginModal">
+									<button type="button" class="btn-success" data-bs-toggle="modal" data-bs-target="#loginModal">
 										Ajouter
 									</button>
 								{% endif %}

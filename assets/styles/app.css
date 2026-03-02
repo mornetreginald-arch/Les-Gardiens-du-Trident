@@ -300,29 +300,53 @@ SECTION ARTICLES
 ========================= */
 
 .hero-articles {
-    min-height: 100vh;
+    min-height: 180vh;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }
 
 .chiots-responsive {
-    border: 3px solid #1B4332;
-    border-radius: 10%;
+    /* height: 300px; */
+    padding-top: 60px;
+    /* border: 3px solid #1B4332;
+    border-radius: 10%; */
     text-align: center;
 }
 
 .chiots-responsive img {
     /* border: 3px solid #1B4332; */
     border-radius: 20%;
-    height: 200px;
+    height: 150px;
     width: auto;
 }
 
-.btn-chiots a {
-    color: #C19A6B;
+.articles-responsive {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* text-align: center; */
 }
 
+.articles-responsive h2 {
+    margin-bottom: 20px;
+    margin-top: 60px;
+}
+
+.btn-warning,
+.btn-success,
+.btn-primary {
+    background-color: #1B4332 !important;
+    color: #C19A6B !important;
+    border-color: #1B4332 !important;
+}
+
+.btn-warning:hover,
+.btn-success:hover,
+.btn-primary:hover {
+    background-color: #163a2b !important;
+    border-color: #163a2b !important;
+}
 
 /* =========================
 AUTH PAGE
@@ -424,6 +448,7 @@ FOOTER
 
 .footer-column ul {
     list-style: none;
+    padding-left: 0;
 }
 
 .footer-column li {
@@ -433,6 +458,7 @@ FOOTER
 .footer-column a {
     color: black;
     text-decoration: none;
+    text-align: center;
 }
 
 .footer-column a:hover {
