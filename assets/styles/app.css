@@ -307,15 +307,13 @@ SECTION ARTICLES
 }
 
 .chiots-responsive {
-    /* height: 300px; */
-    padding-top: 60px;
-    /* border: 3px solid #1B4332;
-    border-radius: 10%; */
+    max-width: 300px;
+    display: block;
+    margin: 0 auto;
     text-align: center;
 }
 
 .chiots-responsive img {
-    /* border: 3px solid #1B4332; */
     border-radius: 20%;
     height: 150px;
     width: auto;
@@ -325,7 +323,6 @@ SECTION ARTICLES
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* text-align: center; */
 }
 
 .articles-responsive h2 {
@@ -333,12 +330,27 @@ SECTION ARTICLES
     margin-top: 60px;
 }
 
+.article-card, .chiots-responsive {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+
+
+
 .btn-warning,
 .btn-success,
 .btn-primary {
     background-color: #1B4332 !important;
     color: #C19A6B !important;
-    border-color: #1B4332 !important;
+    border: 1px solid #1B4332 !important;
+    box-shadow: none !important;
+    border-radius: 20px !important;
 }
 
 .btn-warning:hover,
@@ -346,6 +358,7 @@ SECTION ARTICLES
 .btn-primary:hover {
     background-color: #163a2b !important;
     border-color: #163a2b !important;
+    color: #C19A6B !important;
 }
 
 /* =========================
