@@ -13,139 +13,145 @@
 			{# <thead> #}
 			{# <h2>Chiots</h2> #}
 			{# <tr>
-								<th>Sexe</th>
-								<th>Prix</th>
-								<th>Collier</th>
-								<th>Image</th>
-								<th>Réservation</th>
-							</tr> #}
+														<th>Sexe</th>
+														<th>Prix</th>
+														<th>Collier</th>
+														<th>Image</th>
+														<th>Réservation</th>
+													</tr> #}
 			{# </thead> #}
 
 				{% for chiot in chiots %}
+
 					<div class="chiot-card"> {% if chiot.image %}
 						<img src="{{ asset('uploads/' ~ chiot.image) }}" width="100">
 					{% else %}
 						Pas d'image
 					{% endif %}
 					<br>
-
 					Chiot Collier :
-					{{ chiot.couleurCollier }}</td>
-				<br>
-				Sexe :
-				{{ chiot.sexe }}</td>
-			<br>
-			Prix de Réservation :
-			{{ chiot.prix }}€</td>
-		<br>
+					{{ chiot.couleurCollier }}
+					<br>
+					Sexe :
+					{{ chiot.sexe }}
+					<br>
+					Prix de Réservation :
+					{{ chiot.prix }}€
+					<br>
 
 
-		{% if chiot.estVendu %}
-			<span class="text-danger fw-bold">Déjà réservé</span>
+					{% if chiot.estVendu %}
+						<span class="text-danger fw-bold">Déjà réservé</span>
 
-		{% else %}
+					{% else %}
 
-			{% if app.user %}
-				<a href="{{ path('app_cart_add_chiot', {'id': chiot.id}) }}" class="btn-warning">
-					Réserver
-				</a>
+						{% if app.user %}
+							<a href="{{ path('app_cart_add_chiot', {'id': chiot.id}) }}" class="btn-warning">
+								Réserver
+							</a>
+						{% else %}
+							<button type="button" class="btn-warning" data-bs-toggle="modal" data-bs-target="#loginModal">
+								Réserver ce chiot
+							</button>
+						{% endif %}
+
+					{% endif %}
+
+				{% endfor %}
+			</div>
+		</div>
+
+
+		{# ================= ARTICLES ================= #}
+
+			<h2 class="title-articles">Pour préparer son arrivée</h2>
+
+		<div class="articles-responsive">
+
+			{% for article in articles %}
+				<div class="article-card">
+					
+
+			{% if article.image %}
+				<img src="{{ asset('uploads/' ~ article.image) }}" width="100">
 			{% else %}
-				<button type="button" class="btn-warning" data-bs-toggle="modal" data-bs-target="#loginModal">
-					Réserver ce chiot
-				</button>
+				<span class="text-muted">Pas d'image</span>
 			{% endif %}
 
-		{% endif %}
+				{{ article.nomProduit }}</td>
+				{{ article.prix }}€</td>
 
-	{% endfor %}
-</div>
-	{# </table> #}
-</div>
+			{# 🔥 Affichage stock restant #}
+			{% if article.stock > 0 %}
+				{% if article.stock <= 3 %}
+					<small class="text-danger d-block">Plus que
+						{{ article.stock }}
+						en stock !</small>
+				{% else %}
+					<small class="text-muted d-block">Stock restant :
+						{{ article.stock }}</small>
+				{% endif %}
+			{% endif %}
 
+			{# 🔥 Gestion rupture comme chiot #}
+			{% if article.stock <= 0 %}
+				<span class="text-danger fw-bold">Rupture de stock</span>
+				{% else %}
+				{# <a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn btn-sm btn-success">Ajouter</a> #}
+			{% endif %}
 
-{# ================= ARTICLES ================= #}
+			{% if is_granted('ROLE_ADMIN') %}
+				<div class="mt-1">
+					<a href="{{ path('app_articles_edit', {'id': article.id}) }}">Modifier</a>
+				</div>
+			{% endif %}
 
-<div class="articles-responsive">
-	<h2>Pour préparer son arrivée</h2>
-	{# <table class="table"> #}
-	{# <thead>
-					<h1>Articles</h1>
-					<tr>
-						<th>Nom_produit</th>
-						<th>Prix</th>
-						<th>Image</th>
-						<th>Action</th>
-					</tr>
-				</thead> #}
+			{% if article.prix <= 0 %}
+				<span class="text-muted">Inclus avec réservation</span>
 
-	{% for article in articles %}
-		<div class="article-card">
-			{{ article.nomProduit }}</td>
-		{{ article.prix }}€</td>
+			{% else %}
 
-	{% if article.image %}
-		<img src="{{ asset('uploads/' ~ article.image) }}" width="100">
-	{% else %}
-		<span class="text-muted">Pas d'image</span>
-	{% endif %}
+				{% if app.user %}
+					<a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn-success">
+						Ajouter
+					</a>
+				{% else %}
+					<button type="button" class="btn-success" data-bs-toggle="modal" data-bs-target="#loginModal">
+						Ajouter
+					</button>
+				{% endif %}
 
+			{% endif %}
 
-	{# 🔥 Affichage stock restant #}
-	{% if article.stock > 0 %}
-		{% if article.stock <= 3 %}
-			<small class="text-danger d-block">Plus que
-				{{ article.stock }}
-				en stock !</small>
-		{% else %}
-			<small class="text-muted d-block">Stock restant :
-				{{ article.stock }}</small>
-		{% endif %}
-	{% endif %}
-
-	{# 🔥 Gestion rupture comme chiot #}
-	{% if article.stock <= 0 %}
-		<span class="text-danger fw-bold">Rupture de stock</span>
-		{% else %}
-		{# <a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn btn-sm btn-success">Ajouter</a> #}
-	{% endif %}
-
-	{% if is_granted('ROLE_ADMIN') %}
-		<div class="mt-1">
-			<a href="{{ path('app_articles_edit', {'id': article.id}) }}">Modifier</a>
 		</div>
-	{% endif %}
-
-	{% if article.prix <= 0 %}
-		<span class="text-muted">Inclus avec réservation</span>
-
 	{% else %}
+		<tr>
+			<td colspan="4">Aucun article trouvé</td>
+		</tr>
+	{% endfor %}
+	</div>
+</tbody>
 
-		{% if app.user %}
-			<a href="{{ path('app_cart_add', {'id': article.id}) }}" class="btn-success">
-				Ajouter
+<!-- Modal Login -->
+
+	<div class="modal fade" id="loginModal" tabindex="-1">
+	<div class="modal-dialog">
+	<div class="modal-content">
+
+		<div class="modal-header">
+			<h5 class="modal-title">Connexion requise</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+		</div>
+
+		<div class="modal-body text-center">
+			<p>Vous devez être connecté pour ajouter un article au panier.</p>
+
+			<a href="{{ path('app_login') }}" class="btn btn-primary w-100">
+				Se connecter
 			</a>
-		{% else %}
-			<button type="button" class="btn-success" data-bs-toggle="modal" data-bs-target="#loginModal">
-				Ajouter
-			</button>
-		{% endif %}
-
-	{% endif %}
-
-</div>{% else %}
-<tr>
-	<td colspan="4">Aucun article trouvé</td>
-</tr>{% endfor %}</div></tbody><!-- Modal Login --><div class="modal fade" id="loginModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
-
-<div class="modal-header">
-	<h5 class="modal-title">Connexion requise</h5>
-	<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+		</div>
+	</div>
 </div>
-
-<div class="modal-body text-center">
-	<p>Vous devez être connecté pour ajouter un article au panier.</p>
-
-	<a href="{{ path('app_login') }}" class="btn btn-primary w-100">
-		Se connecter
-	</a>
-</div></div></div></div></section>{% endblock %}
+</div>
+</section>
+{% endblock %}

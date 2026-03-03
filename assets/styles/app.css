@@ -15,19 +15,10 @@ body {
     flex-direction: column;
 }
 
-
 html,
 body {
     width: 100%;
 }
-
-/* header {
-    width: 100vw;
-}
-
-.nav_container {
-    width: 100%;
-} */
 
 h1,
 h2,
@@ -176,7 +167,6 @@ SECTION GÉANTS
 .geant-card img {
     width: 100%;
     height: 275px;
-    /* IMPORTANT */
     border-radius: 15px;
     display: block;
     border: 3px solid #1B4332;
@@ -208,16 +198,13 @@ SECTION QUOTIDIEN
     text-align: center;
 }
 
-/* CONTENEUR GLOBAL */
 .quotidien-container {
     display: flex;
     flex-direction: column;
-    /* MOBILE */
     align-items: center;
     gap: 40px;
 }
 
-/* CHAQUE BLOC */
 .quotidien-text {
     width: 90%;
     max-width: 500px;
@@ -300,13 +287,16 @@ SECTION ARTICLES
 ========================= */
 
 .hero-articles {
-    min-height: 180vh;
+    min-height: 250vh;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+
+    padding-top: 100px; /* 🔥 espace en haut */
 }
 
 .chiots-responsive {
+
     max-width: 300px;
     display: block;
     margin: 0 auto;
@@ -319,29 +309,39 @@ SECTION ARTICLES
     width: auto;
 }
 
+/* .chiot-card {
+margin-top: 80px;
+} */
+
 .articles-responsive {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.articles-responsive h2 {
-    margin-bottom: 20px;
+.title-articles {
+    color: #1B4332;
+    margin-bottom: 60px;
     margin-top: 60px;
+    text-align: center;
 }
 
-.article-card, .chiots-responsive {
+.article-card, .chiot-card {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    background: rgba(255, 255, 255, 0.85);
+    background: white;
     padding: 20px;
     border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    margin-bottom: 40px;
+    box-shadow: 0 8px 20px #1B4332;
+    margin-bottom: 90px;
+    text-align: center;
 }
 
-
+.article-card img {
+    display: block;
+    margin: 0 auto;
+}
 
 .btn-warning,
 .btn-success,
@@ -365,12 +365,12 @@ SECTION ARTICLES
 AUTH PAGE
 ========================= */
 
-.auth-page {
+/* .auth-page {
     background: #f3f4f6;
     min-height: 100vh;
-    /* display: flex;
+    display: flex;
     justify-content: center;
-    align-items: center; */
+    align-items: center;
     padding: 20px;
     width: 100%;
 }
@@ -398,7 +398,6 @@ AUTH PAGE
 .grid-2 {
     display: grid;
     grid-template-columns: 1fr;
-    /* MOBILE */
     gap: 20px;
 }
 
@@ -427,7 +426,7 @@ select {
 
 .auth-btn:hover {
     opacity: 0.9;
-}
+} */
 
 /* =========================
 FOOTER
@@ -436,7 +435,6 @@ FOOTER
 .site_footer {
     background-color: #1B4332;
     padding: 60px 20px;
-    /* margin-top: auto; */
 }
 
 .footer-title {
@@ -448,7 +446,6 @@ FOOTER
 .footer-content {
     display: flex;
     flex-direction: column;
-    /* MOBILE */
     gap: 30px;
     text-align: center;
 }
@@ -605,7 +602,6 @@ SECTION GÉANT
 
     .hero-geant {
         height: 193vh;
-        /* prend toute la hauteur écran */
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -614,22 +610,17 @@ SECTION GÉANT
         flex-direction: column;
     }
 
-    /* Titre en haut */
     .hero-geant h1 {
         color: #C19A6B;
         text-align: center;
         padding-top: 200px;
     }
 
-    /* Container des cartes */
     .geant-container {
         flex: 1;
-        /* 👈 prend tout l’espace restant */
         display: flex;
         justify-content: center;
-        /* centre horizontalement */
         align-items: center;
-        /* centre verticalement */
         gap: 40px;
         flex-wrap: wrap;
     }
@@ -689,7 +680,18 @@ SECTION CONTACT
         padding-right: 260px;
     }
 
+    /* =========================
+SECTION ARTICLES
+========================= */
 
+.hero-articles {
+    min-height: 60vh;
+}
+
+.articles-responsive {
+    flex-direction: row;
+    justify-content: space-around;
+}
 
     /* =========================
 AUTHENTIFICATION
