@@ -9,18 +9,6 @@
 		class="hero-articles" style="background-image: url('{{ asset('images/elevage.png') }}')">
 		{# ================= CHIOTS ================= #}
 		<div class="chiots-responsive">
-			{# <table class="table"> #}
-			{# <thead> #}
-			{# <h2>Chiots</h2> #}
-			{# <tr>
-														<th>Sexe</th>
-														<th>Prix</th>
-														<th>Collier</th>
-														<th>Image</th>
-														<th>Réservation</th>
-													</tr> #}
-			{# </thead> #}
-
 				{% for chiot in chiots %}
 
 					<div class="chiot-card"> {% if chiot.image %}

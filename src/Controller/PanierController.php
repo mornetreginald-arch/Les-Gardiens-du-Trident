@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 final class PanierController extends AbstractController
 {
@@ -41,8 +42,8 @@ final class PanierController extends AbstractController
         ]);
     }
 
-    #[Route('/panier/supprimer/{id}', name: 'app_panier_remove')]
-    public function remove(LignePanier $lignePanier, EntityManagerInterface $em): Response
+    #[Route('/panier/supprimer/{id}', name: 'app_panier_remove', methods: ['POST'])]
+    public function remove(Request $request, LignePanier $lignePanier, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
 
@@ -54,6 +55,11 @@ final class PanierController extends AbstractController
         if ($lignePanier->getPanier()->getUser() !== $user) {
             throw $this->createAccessDeniedException();
         }
+
+        // --- DEBUT DE LA PROTECTION CSRF ---
+        $submittedToken = $request->request->get('_token');
+
+        if ($this->isCsrfTokenValid('delete' . $lignePanier->getId(), $submittedToken)) {
 
         $panier = $lignePanier->getPanier();
 
@@ -73,8 +79,14 @@ final class PanierController extends AbstractController
         $em->flush();
 
         $this->addFlash('success', 'Produit supprimé du panier.');
+        } else {
+            // Si le token est invalide (tentative de piratage)
+            $this->addFlash('danger', 'Action non autorisée (Token CSRF invalide).');
+        }
+        // --- FIN DE LA PROTECTION CSRF ---
 
-        return $this->redirectToRoute('app_articles_index');
+        // On redirige l'utilisateur d'où il vient, ou vers l'index des articles par défaut
+        return $this->redirect($request->headers->get('referer') ?? $this->generateUrl('app_articles_index'));
     }
 
     #[Route('/panier/valider', name: 'app_panier_valider')]
