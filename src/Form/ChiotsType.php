@@ -16,7 +16,7 @@ class ChiotsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add('id_chiot')
+            
             ->add('sexe')
             ->add('couleur_collier')
             ->add('prix')
@@ -36,11 +36,6 @@ class ChiotsType extends AbstractType
                     )
                 ],
             ]);
-        //     ->add('commande', EntityType::class, [
-        //         'class' => Commande::class,
-        //         'choice_label' => 'id',
-        //     ])
-        // ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

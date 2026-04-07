@@ -5,6 +5,7 @@
 {% block body %}
     <h1>Chiots</h1>
 
+    {# Tableau Bootstrap pour afficher les détails d’un chiot #}
     <table class="table">
         <tbody>
             
@@ -18,14 +19,17 @@
             </tr>
             <tr>
                 <th>Prix</th>
-                <td>{{ chiot.prix }}</td>
+                <td>{{ chiot.prix|number_format(2, ',', ' ') }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_chiots_index') }}">back to list</a>
+    {# Lien retour à la liste des chiots #}
+    <a href="{{ path('app_chiots_index') }}">Retour à la liste</a>
 
-    <a href="{{ path('app_chiots_edit', {'id': chiot.id}) }}">edit</a>
+    {# Lien pour modifier ce chiot #}
+    <a href="{{ path('app_chiots_edit', {'id': chiot.id}) }}">Modifier</a>
 
+    {# Inclusion du formulaire de suppression #}
     {{ include('chiots/_delete_form.html.twig') }}
 {% endblock %}

@@ -11,52 +11,60 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ArticlesRepository::class)]
 class Articles
 {
+    // Clé primaire
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    // #[ORM\Column]
-    // private ?int $id_produit = null;
 
+    // Nom du produit
     #[ORM\Column(length: 255)]
     private ?string $nom_produit = null;
 
+    // Prix (decimal)
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $prix = null;
 
+    // Stock disponible
     #[ORM\Column]
     private ?int $stock = null;
 
+    // Nom du fichier image
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
     /**
+     *  Relation ManyToMany avec Commande
+     * Un article peut appartenir à plusieurs commandes
      * @var Collection<int, Commande>
      */
     #[ORM\ManyToMany(targetEntity: Commande::class, inversedBy: 'articles')]
     private Collection $commande;
 
     /**
+     * Relation ManyToMany avec Categorie
      * @var Collection<int, Categorie>
      */
     #[ORM\ManyToMany(targetEntity: Categorie::class, mappedBy: 'articles')]
     private Collection $categories;
 
     /**
+     * Relation OneToMany avec LignePanier
      * @var Collection<int, LignePanier>
      */
     #[ORM\OneToMany(targetEntity: LignePanier::class, mappedBy: 'articles')]
     private Collection $lignePaniers;
 
     /**
+     * Relation OneToMany avec LigneCommande
      * @var Collection<int, LigneCommande>
      */
     #[ORM\OneToMany(targetEntity: LigneCommande::class, mappedBy: 'articles')]
     private Collection $ligneCommandes;
 
     
-
+    // Initialisation des collections
     public function __construct()
     {
         $this->commande = new ArrayCollection();
@@ -131,6 +139,7 @@ class Articles
     }
 
     /**
+     * Retourne les commandes liées
      * @return Collection<int, Commande>
      */
     public function getCommande(): Collection
@@ -138,6 +147,7 @@ class Articles
         return $this->commande;
     }
 
+    // Ajoute une commande
     public function addCommande(Commande $commande): static
     {
         if (!$this->commande->contains($commande)) {
@@ -147,6 +157,7 @@ class Articles
         return $this;
     }
 
+    // Supprime une commande
     public function removeCommande(Commande $commande): static
     {
         $this->commande->removeElement($commande);
@@ -155,6 +166,7 @@ class Articles
     }
 
     /**
+     * Retourne les catégories
      * @return Collection<int, Categorie>
      */
     public function getCategories(): Collection
@@ -162,6 +174,7 @@ class Articles
         return $this->categories;
     }
 
+    // Ajoute une catégorie
     public function addCategory(Categorie $category): static
     {
         if (!$this->categories->contains($category)) {
@@ -172,6 +185,7 @@ class Articles
         return $this;
     }
 
+    // Supprime une catégorie
     public function removeCategory(Categorie $category): static
     {
         if ($this->categories->removeElement($category)) {
@@ -182,6 +196,7 @@ class Articles
     }
 
     /**
+     * Lignes du panier liées
      * @return Collection<int, LignePanier>
      */
     public function getLignePaniers(): Collection
@@ -193,6 +208,7 @@ class Articles
     {
         if (!$this->lignePaniers->contains($lignePanier)) {
             $this->lignePaniers->add($lignePanier);
+            // Lien inverse
             $lignePanier->setArticles($this);
         }
 
@@ -202,7 +218,6 @@ class Articles
     public function removeLignePanier(LignePanier $lignePanier): static
     {
         if ($this->lignePaniers->removeElement($lignePanier)) {
-            // set the owning side to null (unless already changed)
             if ($lignePanier->getArticles() === $this) {
                 $lignePanier->setArticles(null);
             }
@@ -210,12 +225,14 @@ class Articles
         return $this;
     }
 
+    // Permet d'afficher le nom du produit automatiquement
     public function __toString(): string
 {
     return $this->nom_produit ?? '';
 }
 
     /**
+     * Lignes de commande liées
      * @return Collection<int, LigneCommande>
      */
     public function getLigneCommandes(): Collection
@@ -236,7 +253,6 @@ class Articles
     public function removeLigneCommande(LigneCommande $ligneCommande): static
     {
         if ($this->ligneCommandes->removeElement($ligneCommande)) {
-            // set the owning side to null (unless already changed)
             if ($ligneCommande->getArticles() === $this) {
                 $ligneCommande->setArticles(null);
             }

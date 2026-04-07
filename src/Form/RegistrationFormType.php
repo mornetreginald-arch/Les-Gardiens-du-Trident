@@ -15,8 +15,10 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+// Classe du formulaire d'inscription
 class RegistrationFormType extends AbstractType
 {
+    // Construction du formulaire
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -31,22 +33,14 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                 'placeholder' => 'Votre nom'
                 ],
-            //     'constraints' => [
-            //     new NotBlank([
-            //     'message' => 'Entrez votre nom',
-            // ])
-            //     ],
+            
             ])
             ->add('prenom', TextType::class, [
                 'label' => 'Prenom',
                 'attr' => [
                 'placeholder' => 'Votre Prenom'
                 ],
-            //     'constraints' => [
-            //     new NotBlank([
-            //     'message' => 'Entrez votre Prenom',
-            // ])
-            //     ],
+        
             ])
             ->add('telephone', TelType::class, [
                 'attr' => [
@@ -74,46 +68,48 @@ class RegistrationFormType extends AbstractType
                 'placeholder' => 'France'
                 ]
             ])
-    ->add('plainPassword', RepeatedType::class, [
-    'type' => PasswordType::class,
+            // Champ mot de passe avec confirmation
+            ->add('plainPassword', RepeatedType::class, [
+            'type' => PasswordType::class,
+            'mapped' => false,
+            // Message si les deux champs ne correspondent pas
+            'invalid_message' => 'Les mots de passe ne correspondent pas.',
+            'required' => true,
+
+            'first_options'  => [
+                'label' => 'Mot de passe',
+                'attr' => [
+                    'placeholder' => 'Entrez votre mot de passe',
+                    'autocomplete' => 'new-password',
+                ],
+                'constraints' => [
+            ],
+            ],
+
+            'second_options' => [
+                'label' => 'Confirmer le mot de passe',
+                'attr' => [
+                    'placeholder' => 'Confirmez votre mot de passe',
+                    'autocomplete' => 'new-password',
+                    ],
+                ],
+            ])
+
+            ->add('agreeTerms', CheckboxType::class, [
     'mapped' => false,
-    'invalid_message' => 'Les mots de passe ne correspondent pas.',
-    'required' => true,
-
-    'first_options'  => [
-        'label' => 'Mot de passe',
-        'attr' => [
-            'placeholder' => 'Entrez votre mot de passe',
-            'autocomplete' => 'new-password',
-        ],
-        'constraints' => [
-            // new NotBlank([
-            //     'message' => 'Entrez un mot de passe',
-            // ]),
-            // new Length([
-            //     'min' => 6,
-            //     'minMessage' => 'Votre mot de passe doit avoir au moins 6 caractères',
-            //     'max' => 4096,
-            // ]),
-        ],
+    'constraints' => [
+        new IsTrue([
+            'message' => 'Vous devez accepter les conditions.',
+        ]),
     ],
+]);
+}
 
-    'second_options' => [
-        'label' => 'Confirmer le mot de passe',
-        'attr' => [
-            'placeholder' => 'Confirmez votre mot de passe',
-            'autocomplete' => 'new-password',
-        ],
-    ],
-])
-
-
-        ;
-    }
-
+    // Configuration du formulaire
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            // Lie le formulaire à l'entité User
             'data_class' => User::class,
         ]);
     }

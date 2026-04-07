@@ -5,38 +5,55 @@
 {% block body %}
     <h1>Articles</h1>
 
+    {# Tableau Bootstrap affichant les détails d’un article #}
     <table class="table">
         <tbody>
             <tr>
+
+                {# ID de l'article #}
                 <th>Id</th>
                 <td>{{ article.id }}</td>
             </tr>
             <tr>
+
+                {# ID produit (référence interne) #}
                 <th>Id_produit</th>
                 <td>{{ article.idProduit }}</td>
             </tr>
             <tr>
+
+                {# Nom du produit #}
                 <th>Nom_produit</th>
                 <td>{{ article.nomProduit }}</td>
             </tr>
             <tr>
+
+                {# Prix du produit #}
                 <th>Prix</th>
                 <td>{{ article.prix }}</td>
             </tr>
             <tr>
+
+                {# Quantité en stock #}
                 <th>Stock</th>
                 <td>{{ article.stock }}</td>
             </tr>
             <tr>
+
+                {# Image #}
                 <th>Image</th>
                 <td>{{ article.image }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_articles_index') }}">back to list</a>
+    {# Lien retour à la liste des articles #}
+    <a href="{{ path('app_articles_index') }}">Retour à la liste</a>
 
-    <a href="{{ path('app_articles_edit', {'id': article.id}) }}">edit</a>
 
+    {# Lien pour modifier l'article #}
+    <a href="{{ path('app_articles_edit', {'id': article.id}) }}">Modifier</a>
+
+    {# Inclusion du formulaire de suppression #}
     {{ include('articles/_delete_form.html.twig') }}
 {% endblock %}
