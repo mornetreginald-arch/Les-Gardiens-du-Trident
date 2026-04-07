@@ -1,34 +1,49 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
+		{# Encodage des caractères #}
 		<meta charset="UTF-8">
+
+		{# SEO : description du site #}
 		<meta name="description" content="Les Gardiens du Trident est un élevage de chiens proposant des chiots de qualité, des conseils et une boutique spécialisée.">
+
+		{# SEO : mots-clés #}
 		<meta name="keywords" content="élevage chien, chiots, Leonberg, adoption chien, élevage canin">
+
+		{# Auteur du site #}
 		<meta name="author" content="Les Gardiens du Trident">
+
+		{# Responsive design #}
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<!-- Google Font -->
+		{# Google Font #}
 		<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+		{# Bootstrap CSS #}
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-		<!-- Font Awesome -->
+		{# Font Awesome #}
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+		{# Titre dynamique avec Twig #}
 		<title>
 			{% block title %}Les Gardiens du Trident
 			{% endblock %}
 		</title>
 
+		{# Favicon #}
 		<link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
 
+		{# Import des JS (Symfony ImportMap) #}
 		{% block javascripts %}
 			{% block importmap %}
 				{{ importmap('app') }}
 			{% endblock %}
 		{% endblock %}
+
 	</head>
 
+	{# Classe dynamique sur le body #}
 	<body class="{% block body_class %}{% endblock %}">
 
 		<header>
@@ -37,10 +52,13 @@
 				<div class="nav-links">
 					<ul class="nav-list">
 
+						{# Logo + lien accueil #}
 						<a href="{{ path('app_home') }}" class="navbar-brand">
 							<img src="{{ asset('images/logo.png') }}" alt="Logo Les Gardiens du Trident élevage de chiens" width="150">
 						</a>
 
+
+						{# Liens navigation #}
 						<li>
 							<a href="{{ path('app_elevage') }}">NOTRE ÉLEVAGE</a>
 						</li>
@@ -53,13 +71,15 @@
 						<li>
 							<a href="{{ path('app_contact') }}">CONTACT</a>
 						</li>
+
+						{# Bouton important #}
 						<li>
 							<a href="{{ path('app_articles_index') }}" class="nav-btn">DISPONIBILITÉ DES CHIOTS</a>
 						</li>
 					</ul>
 				</div>
 
-				<!-- Navigation utilisateur -->
+				{# Navigation utilisateur #}
 				<div class="nav-user">
 
 					{% if app.user %}
@@ -72,6 +92,7 @@
 							{% endfor %}
 						{% endif %}
 
+						{# Bouton panier #}
 						<button class="btn btn-outline-light position-relative" data-bs-toggle="modal" data-bs-target="#panierModal">
 
 							Panier
@@ -82,16 +103,14 @@
 								</span>
 							{% endif %}
 						</button>
-
-					
-				</button>
-
+						
+				{# Liens utilisateur #}
 				<a href="{{ path('app_user') }}">Mon profil</a>
 				<a href="{{ path('app_logout') }}">Se déconnecter</a>
 				{% endif %}
 			</div>
 
-			<!-- Admin -->
+			{# Menu admin #}
 			{% if is_granted('ROLE_ADMIN') %}
 				<div class="nav-admin">
 					<span>Panneau Admin :</span>
@@ -103,12 +122,17 @@
 			{% endif %}
 
 		</nav>
-	</body>
 </header>
+
+{# Contenu principal #}
 <main>
 {% block body %}{% endblock %}
 </main>
 
+
+
+
+{# Footer #}
 <footer class="site_footer">
 
 	<div class="footer-title">
@@ -117,6 +141,7 @@
 
 	<div class="footer-content">
 
+		{# Navigation footer #}
 		<div class="footer-column">
 			<h4>NAVIGATION</h4>
 			<ul>
@@ -127,6 +152,7 @@
 			</ul>
 		</div>
 
+		{# Infos #}
 		<div class="footer-column">
 			<h4>INFORMATIONS</h4>
 			<ul>
@@ -135,6 +161,7 @@
 			</ul>
 		</div>
 
+		{# Réseaux sociaux #}
 		<div class="footer-column">
 			<h4>RÉSEAUX SOCIAUX</h4>
 			<div class="social-icons">
@@ -144,17 +171,21 @@
 		</div>
 	</div>														
 
+	{# Logo footer #}
 	<div class="footer-logo">
 		<a href="{{ path('app_home') }}" class="navbar-brand">
 			<img src="{{ asset('images/logo.png') }}" alt="Logo Mon Élevage" width="150">
 		</a>
 	</div>
-
 </footer>
 
+{# Bootstrap JS #}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Modal Login Global -->
+
+
+
+{# Modal Login #}
 <div class="modal fade" id="loginModal" tabindex="-1">
 <div class="modal-dialog">
 	<div class="modal-content">
@@ -166,12 +197,14 @@
 
 		<div class="modal-body">
 
+			{# Affiche erreur si login échoue #}
 			{% if error is defined and error %}
 				<div class="alert alert-danger">
 					{{ error.messageKey|trans(error.messageData, 'security') }}
 				</div>
 			{% endif %}
 
+			{# Formulaire login #}
 			<form method="post" action="{{ path('app_login') }}">
 
 				<div class="mb-3">
@@ -182,12 +215,14 @@
 					<input type="password" name="_password" class="form-control" placeholder="Mot de passe" required>
 				</div>
 
+				{# Protection CSRF #}
 				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 				<button type="submit" class="btn btn-success w-100">
 					Se connecter
 				</button>
 
+				{# Conteneur centré avec marge en haut #}
 				<div class="text-center mt-3">
 					<button class="btn btn-link" data-bs-target="#registerModal" data-bs-toggle="modal" data-bs-dismiss="modal">
 						Pas encore de compte ? S'inscrire
@@ -202,20 +237,32 @@
 </div>
 </div>
 
-<!-- Modal Inscription -->
+{# Modal Inscription #}
+
+{# Conteneur principal de la modal Bootstrap #}
 <div class="modal fade" id="registerModal" tabindex="-1">
+
+	{# Boîte de dialogue centrée #}
 	<div class="modal-dialog">
+
+		{# Contenu de la modal #}
 		<div class="modal-content">
 
+			{# En-tête de la modal #}
 			<div class="modal-header">
 				<h5 class="modal-title">Inscription</h5>
+
+				{# Bouton pour fermer la modal #}
 				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 
+			{# Corps de la modal #}
 			<div class="modal-body">
 
+				{# Formulaire d'inscription #}
 				<form method="post" action="{{ path('app_register') }}">
 
+					{# Ligne avec Nom / Prénom #}
 					<div class="row">
 						<div class="col-md-6 mb-3">
 							<input type="text" name="registration_form[nom]" class="form-control" placeholder="Nom" required>
@@ -226,18 +273,22 @@
 						</div>
 					</div>
 
+					{# Email #}
 					<div class="mb-3">
 						<input type="email" name="registration_form[email]" class="form-control" placeholder="Email" required>
 					</div>
 
+					{# Téléphone #}
 					<div class="mb-3">
 						<input type="text" name="registration_form[telephone]" class="form-control" placeholder="Téléphone" required>
 					</div>
 
+					{# Adresse #}
 					<div class="mb-3">
 						<input type="text" name="registration_form[rue]" class="form-control" placeholder="Rue" required>
 					</div>
 
+					{# Code postal / Ville / Pays #}
 					<div class="row">
 						<div class="col-md-4 mb-3">
 							<input type="text" name="registration_form[code_postal]" class="form-control" placeholder="Code Postal" required>
@@ -252,12 +303,15 @@
 						</div>
 					</div>
 
+					{# Mot de passe #}
 					<div class="mb-3">
 						<input type="password" name="registration_form[plainPassword]" class="form-control" placeholder="Mot de passe" required>
 					</div>
 
+					{# Protection CSRF (sécurité Symfony) #}
 					<input type="hidden" name="registration_form[_token]" value="{{ csrf_token('registration_form') }}">
 
+					{# Bouton submit #}
 					<button type="submit" class="btn btn-success w-100">S'inscrire</button>
 				</form>
 			</div>
@@ -265,37 +319,56 @@
 	</div>
 </div>
 
-<!-- Modal Panier -->
+{# Modal Panier #}
+
+{# Modal affichant le panier #}
 <div class="modal fade" id="panierModal" tabindex="-1">
+
+{# Modal large #}
 <div class="modal-dialog modal-lg">
 	<div class="modal-content">
 
+		{# En-tête #}
 		<div class="modal-header">
 			<h5 class="modal-title">Mon Panier</h5>
+
+			{# Fermeture #}
 			<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 		</div>
 
+		{# Corps #}
 		<div class="modal-body">
 
+			{# Vérifie si le panier existe et contient des éléments #}
 			{% if panier is defined and panier and panier.lignePaniers|length > 0 %}
 
+				{# Initialisation du total #}
 				{% set total = 0 %}
 
+				{# Liste des articles #}
 				<ul class="list-group mb-3">
+
+					{# Boucle sur chaque ligne du panier #}
 					{% for ligne in panier.lignePaniers %}
 
+						{# Si c'est un article #}
 						{% if ligne.articles %}
 							{% set prix = ligne.articles.prix %}
 							{% set nom = ligne.articles.nomProduit %}
+
+						{# Si c'est un chiot #}
 						{% elseif ligne.chiot %}
 							{% set prix = ligne.chiot.prix %}
 							{% set nom = 'Chiot ' ~ ligne.chiot.sexe %}
 						{% endif %}
 
+						{# Calcul du total #}
 						{% set total = total + (prix * ligne.quantite) %}
 
+						{# Ligne affichée #}
 						<li class="list-group-item d-flex justify-content-between align-items-center">
 
+							{# Infos produit #}
 							<div>
 								<strong>{{ nom }}</strong><br>
 								{{ prix }}
@@ -303,7 +376,10 @@
 								{{ ligne.quantite }}
 							</div>
 
+							{# Formulaire pour supprimer un élément #}
 							<form method="post" action="{{ path('app_panier_remove', {'id': ligne.id}) }}" style="display: inline-block; margin: 0;">
+
+								{# Token CSRF #}
     							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ligne.id) }}"><button type="submit" class="btn btn-sm btn-danger">✕</button>
 							</form>
 
@@ -312,17 +388,20 @@
 					{% endfor %}
 				</ul>
 
+				{# Affichage total #}
 				<div class="text-end">
 					<h5>Total :<strong>{{ total }}€</strong>
 					</h5>
 				</div>
 
+				{# Bouton validation du panier #}
 				<div class="text-end mt-3">
 					<a href="{{ path('app_panier_valider') }}" class="btn btn-success">
 						Valider mon panier
 					</a>
 				</div>
 
+			{# Panier vide #}
 			{% else %}
 				<p class="text-center">Votre panier est vide.</p>
 			{% endif %}
@@ -331,3 +410,5 @@
 </div>
 </body>
 </html>
+
+
