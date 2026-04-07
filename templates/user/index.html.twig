@@ -1,22 +1,34 @@
+{# Hérite du template principal (base du site) #}
 {% extends 'base.html.twig' %}
 
+{# Définit le titre de la page #}
 {% block title %}Mon profil{% endblock %}
 
+{# Début du contenu principal de la page #}
 {% block body %}
+
+{# Titre avec le prénom de l'utilisateur connecté #}
 <h1>Profil de {{ app.user.prenom }}</h1>
 
-{# <p><strong>Nom :</strong> {{ app.user.nom }}</p>
-<p><strong>Prénom :</strong> {{ app.user.prenom }}</p> #}
-{# <p><strong>Adresse :</strong> {{ app.user.adresse }}</p> #}
-
+{# Section commandes #}
 <h2>Mes commandes</h2>
+
+{# Vérifie si l'utilisateur a des commandes #}
 {% if app.user.commandes|length > 0 %}
     <ul>
+
+    {# Boucle sur toutes les commandes de l'utilisateur #}
     {% for commande in app.user.commandes %}
+
+        {# Affichage des infos de la commande #}
         <li>Commande #{{ commande.id }} - {{ commande.dateCommande|date('d/m/Y') }} - {{ commande.total }} €</li>
+
+        {# Lien pour voir le détail de la commande #}
         <a href="{{ path('app_commande_index') }}" class="btn btn-success">Voir le detail de ma commande</a>
     {% endfor %}
     </ul>
+
+{# Message si aucune commande #}
 {% else %}
     <p>Vous n'avez pas encore de commandes.</p>
 {% endif %}

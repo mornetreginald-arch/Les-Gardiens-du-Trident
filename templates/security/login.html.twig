@@ -1,6 +1,13 @@
+{# Hérite du template principal #}
 {% extends 'base.html.twig' %}
 
+{# Bloc principal du contenu #}
 {% block body %}
+
+    {# Script exécuté côté navigateur #}
+    {# Lorsque la page est complètement chargée #}
+    {# Création d'une instance de la modal Bootstrap #}
+    {# Affiche automatiquement la modal #}
     <script>
         window.onload = function() {
             var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));

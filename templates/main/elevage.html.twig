@@ -1,21 +1,28 @@
+{# Hérite du template principal #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Elevage
-{% endblock %}
+{# Titre de la page (affiché dans l'onglet navigateur) #}
+{% block title %}<h2>Élevage de Leonberg en France</h2>{% endblock %}
 
+{# Début du contenu principal #}
 {% block body %}
 
-
+	{# Section HERO (bannière principale avec image de fond) #}
 	<section class="hero" style="background-image: url('{{ asset('images/elevage.png') }}')">
 
+		{# Titre principal #}
 		<h1>L'ESPRIT DES GARDIENS DU TRIDENT</h1>
 
+		{# Texte d’introduction #}
 		<div class="text-hero">
 			<h3>Bienvenue au coeur de notre passion</h3>
+
+			{# Description de l’élevage #}
 			<p>Élever des Leonberg n'est pas pour nous une simple activité, c'est une promesse : celle de préserver la noblesse, la douceur et la puissance de ce « lion de jardin » si cher à nos coeurs.</p>
 			<p>Le nom de notre élevage, Les Gardiens du Trident, incarne notre vision. Comme le trident symbolise la force et la maitrise des éléments, nous veillons sur trois piliers fondamentaux qui guident chacune de nos portées :</p>
 		</div>
 
+		{# Conteneur des 3 valeurs principales #}
 		<div class="elevage-container">
 
 			<div class="elevage-text">
@@ -34,13 +41,14 @@
 			</div>
 		</div>
 
+		{# Conclusion / message final #}
 		<div class="elevage-text-end">
 			<p>Ici, chaque chiot est une part de notre histoire. Nous ne cherchons pas seulement des acheteurs, mais de véritables partenaires de vie, capables d'offrir à nos géants l'espace et l'amour qu'ils méritent.</p>
 		</div>
 
 	</section>
 
-
+	{# Image illustrative en dessous de la section #}
 	<div class="img-main">
 		<img src="{{ asset('images/chien-et-chiot.jpg') }}" alt="chien-et-chiot">
 	</div>

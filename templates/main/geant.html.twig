@@ -1,14 +1,18 @@
+{# Hérite du template principal #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Géants
-{% endblock %}
+{# Titre de la page #}
+{% block title %}<h2>Nos chiens Leonberg reproducteurs</h2>{% endblock %}
 
 {% block body %}
 
+	{# Section HERO avec image de fond #}
 	<section class="hero-geant" style="background-image: url('{{ asset('images/geant.png') }}')">
 
+		{# Titre principal de la page #}
 		<h1>NOS GÉANTS - L'HÉRITAGE DU TRIDENT</h1>
 
+		{# Conteneur des chiens #}
 		<div class="geant-container">
 
 			<div class="geant-card">

@@ -371,9 +371,7 @@
 							{# Infos produit #}
 							<div>
 								<strong>{{ nom }}</strong><br>
-								{{ prix }}
-								€ x
-								{{ ligne.quantite }}
+								{{ prix }}€ x {{ ligne.quantite }}
 							</div>
 
 							{# Formulaire pour supprimer un élément #}
@@ -390,7 +388,7 @@
 
 				{# Affichage total #}
 				<div class="text-end">
-					<h5>Total :<strong>{{ total }}€</strong>
+					<h5>Total :<strong>{{ total|number_format(2, ',', ' ') }}€</strong>
 					</h5>
 				</div>
 
