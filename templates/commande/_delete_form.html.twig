@@ -1,4 +1,11 @@
-<form method="post" action="{{ path('app_commande_delete', {'id': commande.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+{# Formulaire pour supprimer une commande #}
+
+{# Route Symfony avec l'id de la commande à supprimer #}
+{# Confirmation JS avant soumission #}
+{# Token CSRF pour sécuriser la suppression #}
+<form method="post" action="{{ path('app_commande_delete', {'id': commande.id}) }}" onsubmit="return confirm('Etes vous sûr de vouloir supprimer cette commande ?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commande.id) }}">
+
+    {# Bouton de suppression #}
     <button class="btn">Delete</button>
 </form>

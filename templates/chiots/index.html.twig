@@ -1,12 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Chiots index
-{% endblock %}
+{% block title %}Liste des chiots{% endblock %}
 
 {% block body %}
 	<h1>Chiots index</h1>
 
+	{# Tableau Bootstrap pour afficher les chiots #}
 	<table class="table">
+
+		{# En-tête du tableau #}
 		<thead>
 			<tr>
 				<th>Sexe</th>
@@ -18,6 +20,8 @@
 			</tr>
 		</thead>
 		<tbody>
+
+			{# Boucle sur tous les chiots #}
 			{% for chiot in chiots %}
 				<tr>
 					<td>{{ chiot.sexe }}</td>
@@ -31,14 +35,16 @@
 						{% endif %}
 					</td>
 
-					<td>{{ chiot.prix }}
-						€</td>
+					<td>{{ chiot.prix|number_format(2, ',', ' ') }} €</td>
 
+					{# Bouton réservation ou statut vendu #}
 					<td>
 						{% if not chiot.estVendu %}
 							<a href="{{ path('app_cart_add_chiot', {'id': chiot.id}) }}" class="btn btn-success btn-sm">
 								Réserver
 							</a>
+
+						{# Affiche si déjà vendu #}
 						{% else %}
 							<span class="text-danger">Déjà vendu</span>
 						{% endif %}
@@ -54,6 +60,7 @@
 		</tbody>
 	</table>
 
+	{# Lien pour ajouter un nouveau chiot #}
 	<a href="{{ path('app_chiots_new') }}">Ajouter un nouveau chiot</a>
 
 {% endblock %}

@@ -1,4 +1,11 @@
-<form method="post" action="{{ path('app_chiots_delete', {'id': chiot.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+{# Formulaire pour supprimer un chiot #}
+
+{# Route Symfony appelée avec l'id du chiot #}
+{# Demande de confirmation avant suppression #}
+{# Token CSRF pour sécuriser la requête #}
+<form method="post" action="{{ path('app_chiots_delete', {'id': chiot.id}) }}" onsubmit="return confirm('Etes vous sûr de vouloir supperimer ce chiot ?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ chiot.id) }}">
+
+    {# Bouton de suppression #}
     <button class="btn">Supprimer</button>
 </form>

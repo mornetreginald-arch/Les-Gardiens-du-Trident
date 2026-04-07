@@ -5,7 +5,9 @@
 {% block body %}
     <h1>Créer un nouveau chiot</h1>
 
+    {# Inclusion du formulaire de création #}
     {{ include('chiots/_form.html.twig') }}
 
+    {# Lien pour revenir à la liste des chiots #}
     <a href="{{ path('app_chiots_index') }}">back to list</a>
 {% endblock %}

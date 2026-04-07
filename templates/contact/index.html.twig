@@ -1,27 +1,39 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+	{# Section HERO avec image de fond #}
 	<section class="contact-hero" style="background-image: url('{{ asset('images/geant.png') }}')">
 
+		{# Bloc titre + introduction #}
 		<div class="title-hero">
 
 			<h1>REJOINGNEZ L'AVENTURE !</h1>
+
+			{# Texte d’introduction #}
 			<p>Vous avez un coup de coeur pour le Leonberg ? Vous souhaitez en savoir plus sur nos futures portées ou simplement échanger sur la race ? Nous vous lirons avec plaisir.</p>
 
 		</div>
 
+		{# Conteneur du formulaire #}
 		<div class="contact-container">
 
 			<h3>Contactez-nous</h3>
 
+			{# Sous-titre du formulaire #}
 			<p class="subtitle">Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.</p>
 
+			{# Début du formulaire Symfony #}
 			{{ form_start(form) }}
 
 			<div class="form-group">
 				<label>Nom complet</label>
 				<div class="input-icon">
+
+					{# Icône utilisateur #}
 					<i class="fa-regular fa-user"></i>
+
+					{# Champ Symfony #}
 					{{ form_widget(form.nom) }}
 				</div>
 			</div>
@@ -42,6 +54,7 @@
 				</div>
 			</div>
 
+			{# Champ Message #}
 			<div class="form-group">
 				<label>Message</label>
 				<div class="input-icon textarea-icon">
@@ -50,11 +63,14 @@
 				</div>
 			</div>
 
+			{# Bouton d’envoi #}
 			<button type="submit" class="btn btn-primary">Envoyer le message</button>
 
+			{# Fin du formulaire Symfony (inclut CSRF automatiquement) #}
 			{{ form_end(form) }}
 		</div>
 
+		{# Coordonnées #}
 		<div class="address">
 			<h2>Nos Coordonnées</h2>
 			<p>06.44.97.44.67</p>

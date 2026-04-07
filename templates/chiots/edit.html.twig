@@ -5,9 +5,13 @@
 {% block body %}
     <h1>Edit Chiots</h1>
 
+    {# Inclusion du formulaire de modification (partial Twig) #}
+    {# On passe un paramètre pour changer le texte du bouton en "Update" #}
     {{ include('chiots/_form.html.twig', {'button_label': 'Update'}) }}
 
+    {# Lien pour revenir à la liste des chiots #}
     <a href="{{ path('app_chiots_index') }}">Retour à la liste</a>
 
+    {# Inclusion du formulaire de suppression du chiot #}
     {{ include('chiots/_delete_form.html.twig') }}
 {% endblock %}

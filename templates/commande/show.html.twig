@@ -5,39 +5,31 @@
 {% block body %}
     <h1>Commande</h1>
 
+    {# Tableau affichant les informations de la commande #}
     <table class="table">
         <tbody>
-            {# <tr>
-                <th>Id</th>
-                <td>{{ commande.id }}</td>
-            </tr> #}
-            {# <tr>
-                <th>articles</th>
-                <td>{{ commande.nomProduit }}</td>
-            </tr> #}
+
             <tr>
+                {# Ligne : date de la commande #}
                 <th>Date_commande</th>
+
+                {# Affiche la date si elle existe, sinon rien #}
                 <td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
+
+                {# Ligne : total de la commande #}
                 <th>Total</th>
                 <td>{{ commande.total }}</td>
             </tr>
-            {# <tr>
-                <th>Quantite</th>
-                <td>{{ commande.quantite }}</td>
-            </tr> #}
-            {# <tr>
-                <th>Prix_unitaire</th>
-                <td>{{ commande.prixUnitaire }}</td>
-            </tr> #}
+            
         </tbody>
     </table>
 
+    {# Lien pour revenir à la liste des commandes #}
     <a href="{{ path('app_commande_index') }}">Retour à la liste</a>
 
-    {# <a href="{{ path('app_commande_edit', {'id': commande.id}) }}">Modifier</a> #}
-
+    {# Si l'utilisateur est admin, affiche le formulaire de suppression #}
     {% if is_granted('ROLE_ADMIN') %}
     {{ include('commande/_delete_form.html.twig') }}
     {% endif %}

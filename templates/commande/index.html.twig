@@ -5,32 +5,47 @@
 
 {% block body %}
 
-	{% if is_admin %}
+	{# Vérifie si l'utilisateur est admin #}
+	{% if is_granted('ROLE_ADMIN') %}
 
 		<h1>Commandes par utilisateur</h1>
 
+		{# Boucle sur tous les utilisateurs #}
 		{% for user in users %}
+
+			{# Vérifie si l'utilisateur a des commandes #}
 			{% if user.commandes|length > 0 %}
 				<hr>
+
+				{# Infos utilisateur #}
 				<h2>{{ user.prenom }}
 					{{ user.nom }}
 					({{ user.email }})</h2>
 
+				{# Boucle sur les commandes de cet utilisateur #}
 				{% for commande in user.commandes %}
+
+					{# Infos commande #}
 					<p>
 						Commande #{{ commande.id }}
 						-
 						{{ commande.dateCommande|date('d/m/Y') }}
 						-
-						{{ commande.total }}
-						€
+						{{ commande.total|number_format(2, ',', ' ') }} €
 					</p>
 
+					{# Liste des éléments de la commande #}
 					<ul>
+
+						{# Boucle sur les lignes de commande #}
 						{% for ligne in commande.ligneCommandes %}
 							<li>
+
+								{# Si c'est un article #}
 								{% if ligne.articles %}
 									{{ ligne.articles.nomProduit }}
+
+								{# Si c'est un chiot #}
 								{% elseif ligne.chiot %}
 									Chiot -
 									{{ ligne.chiot.sexe }}
@@ -43,13 +58,14 @@
 						{% endfor %}
 					</ul>
 
+					{# Formulaire de suppression de commande (admin uniquement) #}
 					<form method="post" action="{{ path('app_commande_delete', {'id': commande.id}) }}" onsubmit="return confirm('Supprimer cette commande ?');">
 
+						{# Protection CSRF #}
 						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commande.id) }}">
 
-						<button class="btn btn-danger btn-sm">
-							Supprimer
-						</button>
+						{# Bouton suppression #}
+						<button class="btn btn-danger btn-sm">Supprimer</button>
 					</form>
 
 				{% endfor %}
@@ -58,8 +74,10 @@
 
 	{% else %}
 
+		{# Partie utilisateur classique (non admin) #}
 		<h1>Mes commandes</h1>
 
+		{# Boucle sur les commandes de l'utilisateur connecté #}
 		{% for commande in commandes %}
 
 			<p>
@@ -72,6 +90,8 @@
 			</p>
 
 			<ul>
+
+				{# Boucle sur les lignes de commande #}
 				{% for ligne in commande.ligneCommandes %}
 					<li>
 						{% if ligne.articles %}
@@ -88,6 +108,7 @@
 				{% endfor %}
 			</ul>
 
+		{# Si aucune commande #}
 		{% else %}
 			<p>Aucune commande trouvée.</p>
 		{% endfor %}

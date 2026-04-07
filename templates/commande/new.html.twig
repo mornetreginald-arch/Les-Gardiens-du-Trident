@@ -5,8 +5,15 @@
 {% block body %}
 <h1>Passer une commande</h1>
 
+{# Démarre le formulaire Symfony (ouvre <form>) #}
 {{ form_start(form) }}
+
+    {# Affiche le champ "chiot" #}
     {{ form_row(form.chiot) }}
+
+    {# Bouton de soumission #}
     <button type="submit" class="btn btn-primary">Commander</button>
+
+{# Ferme le formulaire (inclut CSRF automatiquement) #}
 {{ form_end(form) }}
 {% endblock %}

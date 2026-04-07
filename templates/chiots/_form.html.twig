@@ -1,4 +1,11 @@
+{# Ouvre le formulaire Symfony (<form>) avec method, action et CSRF auto #}
 {{ form_start(form) }}
+
+    {# Affiche TOUS les champs du formulaire automatiquement #}
     {{ form_widget(form) }}
+
+    {# Bouton de soumission du formulaire #}
     <button class="btn">{{ button_label|default('Save') }}</button>
+
+{# Ferme le formulaire + ajoute les champs cachés (CSRF) #}
 {{ form_end(form) }}
