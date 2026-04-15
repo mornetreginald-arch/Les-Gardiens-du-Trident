@@ -19,6 +19,7 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            session_fixation_strategy: none
             form_login:
                 login_path: app_login
                 check_path: app_login
