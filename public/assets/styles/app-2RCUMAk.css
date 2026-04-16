@@ -1,0 +1,702 @@
+/* =========================
+RESET CSS
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lora', serif;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+}
+
+html,
+body {
+    width: 100%;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 600;
+}
+
+
+/* =========================
+NAVIGATION
+========================= */
+
+.nav_container {
+    background-color: #1B4332;
+    /* width: 100%; */
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    /* MOBILE */
+    align-items: center;
+    gap: 15px;
+    padding: 20px 0;
+    margin-bottom: 0;
+}
+
+.nav-list a {
+    color: #C19A6B;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav-btn,
+.geant-btn {
+    background-color: #C19A6B;
+    color: #1B4332 !important;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.nav-admin a,
+.nav-user a {
+    text-decoration: none;
+    color: #C19A6B;
+    margin-right: 10px;
+}
+
+.nav-user,
+.nav-admin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* =========================
+HERO SECTION ÉLEVAGE
+========================= */
+
+.hero {
+    height: 200vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.text-hero {
+    padding-top: 60px;
+}
+
+.text-hero,
+.hero h1 {
+    text-align: center;
+}
+
+.hero h1 {
+    padding-top: 100px;
+}
+
+.text-hero p {
+    margin-bottom: 20px;
+}
+
+.elevage-text h3 {
+    color: #C19A6B;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.elevage-text,
+.elevage-text-end {
+    text-align: center;
+}
+
+.elevage-text-end {
+    padding-top: 80px;
+}
+
+/* =========================
+IMAGE SECTION ÉLEVAGE
+========================= */
+
+.image-section img {
+    width: 95%;
+    display: block;
+    margin: 0 auto;
+}
+
+.img-main img {
+    width: 95%;
+    max-width: 600px;
+    display: block;
+    margin: 0 auto;
+}
+
+/* =========================
+SECTION GÉANTS
+========================= */
+
+.hero-geant {
+    height: 180vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.hero-geant h1 {
+    color: #C19A6B;
+    padding-top: 120px;
+    text-align: center;
+}
+
+.geant-card {
+    border: 3px solid #1B4332;
+    border-radius: 20px;
+    padding: 15px;
+    margin: 50px auto;
+    width: 90%;
+    max-width: 350px;
+    text-align: center;
+}
+
+.geant-card img {
+    width: 100%;
+    height: 275px;
+    border-radius: 15px;
+    display: block;
+    border: 3px solid #1B4332;
+}
+
+.geant-card p {
+    margin-bottom: 60px;
+    margin-top: 30px;
+}
+
+/* =========================
+SECTION QUOTIDIEN
+========================= */
+
+.hero-quotidien {
+    height: 160vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.hero-quotidien h1,
+.hero-quotidien p {
+    color: #1B4332;
+}
+
+.quotidien-main {
+    padding-top: 60px;
+    text-align: center;
+}
+
+.quotidien-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+.quotidien-text {
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.quotidien-text h3 {
+    color: #C19A6B;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.quotidien-text p {
+    color: #0b0b2b;
+    line-height: 1.8;
+}
+
+/* =========================
+SECTION CONTACT
+========================= */
+
+.contact-hero {
+    min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.contact-container {
+    background: #f8f9fb;
+    padding: 30px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    margin: 40px auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f3f4f6;
+    font-size: 14px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: #050518;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.subtitle,
+.contact-container h3 {
+    text-align: center;
+}
+
+
+.title-hero {
+    color: #1B4332;
+    text-align: center;
+    padding-top: 100px;
+}
+
+.address {
+    color: #1B4332;
+    text-align: center;
+    padding-bottom: 200px;
+}
+
+/* =========================
+SECTION ARTICLES
+========================= */
+
+.hero-articles {
+    min-height: 250vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    padding-top: 100px; /* 🔥 espace en haut */
+}
+
+.chiots-responsive {
+
+    max-width: 300px;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.chiots-responsive img {
+    border-radius: 20%;
+    height: 150px;
+    width: auto;
+}
+
+/* .chiot-card {
+margin-top: 80px;
+} */
+
+.articles-responsive {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-articles {
+    color: #1B4332;
+    margin-bottom: 60px;
+    margin-top: 60px;
+    text-align: center;
+}
+
+.article-card, .chiot-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px #1B4332;
+    margin-bottom: 90px;
+    text-align: center;
+}
+
+.article-card img {
+    display: block;
+    margin: 0 auto;
+}
+
+.btn-warning,
+.btn-success,
+.btn-primary {
+    background-color: #1B4332 !important;
+    color: #C19A6B !important;
+    border: 1px solid #1B4332 !important;
+    box-shadow: none !important;
+    border-radius: 20px !important;
+}
+
+.btn-warning:hover,
+.btn-success:hover,
+.btn-primary:hover {
+    background-color: #163a2b !important;
+    border-color: #163a2b !important;
+    color: #C19A6B !important;
+}
+
+/* =========================
+AUTH PAGE
+========================= */
+
+/* .auth-page {
+    background: #f3f4f6;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.auth-container h1 {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    font-size: 14px;
+}
+
+.auth-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #0b0b2b;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.auth-btn:hover {
+    opacity: 0.9;
+} */
+
+/* =========================
+FOOTER
+========================= */
+
+.site_footer {
+    background-color: #1B4332;
+    padding: 60px 20px;
+}
+
+.footer-title {
+    color: #C19A6B;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+}
+
+.footer-column h4 {
+    color: #C19A6B;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.footer-column li {
+    margin-bottom: 8px;
+}
+
+.footer-column a {
+    color: black;
+    text-decoration: none;
+    text-align: center;
+}
+
+.footer-column a:hover {
+    opacity: 0.7;
+}
+
+.footer-logo {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.footer-logo img {
+    width: 150px;
+}
+
+/* =========================
+TABLET (768px+)
+========================= */
+
+@media (min-width: 768px) {
+
+    .nav-list {
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .hero {
+        height: 130vh;
+    }
+
+    .hero h1 {
+        padding-top: 60px;
+    }
+
+    .text-hero {
+        padding-top: 60px;
+    }
+
+    .elevage-text p {
+        width: 60%;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .image-section img {
+        width: 85%;
+    }
+
+    .hero-quotidien {
+        height: 130vh;
+    }
+
+    .title-hero p {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .grid-2 {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .auth-container {
+        max-width: 700px;
+        padding: 40px;
+    }
+
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-around;
+        text-align: left;
+    }
+}
+
+/* =========================
+LAPTOP (1024px+)
+========================= */
+
+@media (min-width: 1024px) {
+
+    /* =========================
+NAV
+========================= */
+
+    .nav-list {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    /* =========================
+SECTION ÉLEVAGE
+========================= */
+
+    .text-hero {
+        display: block;
+        margin: 0 auto;
+        width: 50%;
+        padding-top: 60px;
+    }
+
+    .elevage-container {
+        display: flex;
+        text-align: center;
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+
+    .elevage-text p {
+        width: 60%;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .elevage-text-end {
+        width: 60%;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .hero {
+        height: 130vh;
+    }
+
+    .image-section img {
+        width: 70%;
+    }
+
+    /* =========================
+SECTION GÉANT
+========================= */
+
+    .hero-geant {
+        height: 193vh;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero-geant h1 {
+        color: #C19A6B;
+        text-align: center;
+        padding-top: 200px;
+    }
+
+    .geant-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+
+    .geant-card p {
+        margin-top: 90px;
+    }
+
+    .geant-card {
+        height: 600px;
+
+        /* opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.8s ease forwards; */
+    }
+
+    /* @keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} */
+
+    /* =========================
+SECTION QUOTIDIEN
+========================= */
+
+    .hero-quotidien {
+        height: 130vh;
+    }
+
+    .quotidien-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 200px;
+    }
+
+    .quotidien-text {
+        width: 45%;
+    }
+
+    /* =========================
+SECTION CONTACT
+========================= */
+
+    .contact-container {
+        max-width: 600px;
+    }
+
+    .contact-hero {
+        min-height: 100vh;
+    }
+
+    .title-hero p {
+        padding-left: 260px;
+        padding-right: 260px;
+    }
+
+    /* =========================
+SECTION ARTICLES
+========================= */
+
+.hero-articles {
+    min-height: 60vh;
+}
+
+.articles-responsive {
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+    /* =========================
+AUTHENTIFICATION
+========================= */
+
+    .auth-container {
+        max-width: 900px;
+    }
+}
