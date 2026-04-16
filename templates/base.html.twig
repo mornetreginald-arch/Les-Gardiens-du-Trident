@@ -406,6 +406,19 @@
 		</div>
 	</div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const panierBtn = document.querySelector('[data-bs-target="#panierModal"]');
+
+    if (panierBtn) {
+        panierBtn.addEventListener("click", function () {
+            document.querySelectorAll('.modal.show').forEach(modal => {
+                bootstrap.Modal.getInstance(modal)?.hide();
+            });
+        });
+    }
+});
+</script>
 </body>
 </html>
 
