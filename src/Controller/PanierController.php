@@ -121,13 +121,13 @@ final class PanierController extends AbstractController
             $ligneCommande->setCommande($commande);
             $ligneCommande->setQuantite($lignePanier->getQuantite());
 
-            // 🔵 ARTICLE
-            // 🔵 ARTICLE
+            //  ARTICLE
+            //  ARTICLE
 if ($lignePanier->getArticles()) {
 
     $article = $lignePanier->getArticles();
 
-    // 🔒 Si article PAYANT → gérer stock
+    //  Si article PAYANT → gérer stock
     if ((float)$article->getPrix() > 0) {
 
         if ($article->getStock() < $lignePanier->getQuantite()) {
@@ -158,7 +158,7 @@ if ($lignePanier->getArticles()) {
 }
 
 
-            // 🐶 CHIOT
+            //  CHIOT
             if ($lignePanier->getChiot()) {
 
                 $chiot = $lignePanier->getChiot();
@@ -205,7 +205,7 @@ if ($lignePanier->getArticles()) {
         $clientVille = $user->getCodePostal() . " " . $user->getVille();
         $clientPays = $user->getPays();
 
-        $logoPath = $this->getParameter('kernel.project_dir') . '/public/images/logo.png';
+        $logoPath = $this->getParameter('kernel.project_dir') . '/public/images/logo-chien.png';
 
         $email = (new Email())
             ->from('noreply@gardiens-trident.local')
